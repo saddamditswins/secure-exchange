@@ -1,3 +1,4 @@
+import type { Workspace } from '../types';
 import { useState, useMemo } from 'react';
 import { Search, ChevronDown, MoreHorizontal, FileDown, Eye, Edit2, Trash2, CloudDownload, CheckCircle, User, Filter } from 'lucide-react';
 import {
@@ -9,19 +10,6 @@ import {
 } from './ui/dropdown-menu';
 import { Checkbox } from './ui/checkbox';
 import { toast } from 'sonner';
-
-interface Workspace {
-  id: string;
-  dealId: string | null; // null for manual workspaces
-  name: string;
-  description?: string;
-  status: 'Draft' | 'Active' | 'Completed' | 'Archived';
-  lastUpdated: string; // ISO format
-  createdDate: string; // ISO format
-  documentsCount?: number;
-  updatedBy: string;
-  staffPerson: string; // Internal user assigned
-}
 
 interface WorkspaceListViewProps {
   onOpenWorkspace: (workspace: Workspace) => void;
@@ -151,7 +139,7 @@ export function WorkspaceListView({ onOpenWorkspace, onCreateWorkspace, userRole
         matchesStatus = selectedStatuses.includes(ws.status);
       }
 
-      const matchesStaff = selectedStaff.length === 0 || selectedStaff.includes(ws.staffPerson);
+      const matchesStaff = selectedStaff.length === 0 || selectedStaff.includes(ws.staffPerson ?? '');
 
       return matchesSearch && matchesStatus && matchesStaff;
     });
@@ -453,9 +441,9 @@ export function WorkspaceListView({ onOpenWorkspace, onCreateWorkspace, userRole
                     <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                              <div className="w-6 h-6 rounded-full bg-neutral-200 flex items-center justify-center text-xs font-medium text-neutral-600">
-                                {workspace.staffPerson.charAt(0)}
+                                {(workspace.staffPerson ?? 'Unassigned').charAt(0)}
                              </div>
-                             <span className="text-sm text-neutral-700">{workspace.staffPerson}</span>
+                             <span className="text-sm text-neutral-700">{workspace.staffPerson ?? 'Unassigned'}</span>
                         </div>
                     </td>
                     <td className="px-6 py-4">

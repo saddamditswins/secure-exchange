@@ -1,3 +1,4 @@
+import type { Exchange } from '../App';
 import { useState, useEffect } from 'react';
 import { 
   ArrowLeft, Upload, Share2, Search, Filter, MoreHorizontal, 
@@ -42,13 +43,6 @@ interface Document {
   updatedBy: string;
   downloadable: boolean;
   documentType: 'Uploaded' | 'Received';
-}
-
-interface Exchange {
-  id: string;
-  title: string;
-  status: string;
-  // ... other fields handled by ExchangesView
 }
 
 interface SigningPacket {
@@ -989,7 +983,11 @@ export function WorkspaceDetailsView({
       <DocumentUploadModal
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}
-        onUpload={handleBulkUpload}
+        initialData={null}
+        isWorkspaceUpload={true}
+        bulkOnly={true}
+        onSave={() => {}} // Not used in bulk mode
+        onBulkUpload={handleBulkUpload}
       />
 
       <DocumentLibrarySelectorModal

@@ -76,7 +76,7 @@ export type SuperAdminViewType =
   | 'tenant-detail';
 
 import type { ExchangeStatus } from './utils/exchangeStatus';
-import type { Organization, Tenant } from './types';
+import type { Organization, Tenant, Workspace } from './types';
 export type { ExchangeStatus };
 
 export interface Exchange {
@@ -103,16 +103,6 @@ interface DocumentExchange {
   status: 'Active' | 'Pending Review' | 'Expiring Soon';
   sharedBy: string;
   sharedDate: string;
-}
-
-interface Workspace {
-  id: string;
-  dealId: string | null;
-  name: string;
-  status: 'Draft' | 'Pending Approval' | 'Active' | 'Completed';
-  lastUpdated: string;
-  documentsCount?: number;
-  createdBy?: string;
 }
 
 export default function App() {
@@ -655,16 +645,20 @@ function AppContent() {
             />
           )}
           {currentView === 'import-documents' && (
-            <ImportDocumentsView 
+            <ImportDocumentsView
               workspaceId={newWorkspaceId || 'WS-2003'}
-              onContinue={(workspace) => {
-                setSelectedWorkspace(workspace);
-                setCurrentView('prepare-sharing');
-              }} 
+              dealId={newWorkspaceDealId ?? ''}
+              onBack={handleBackToWorkspaces}
+              onContinue={handleContinueToPrepare}
             />
           )}
-          {currentView === 'prepare-sharing' && selectedWorkspace && (
-            <PrepareForSharingView workspace={selectedWorkspace} />
+          {currentView === 'prepare-sharing' && (
+            <PrepareForSharingView
+              workspaceId={newWorkspaceId}
+              dealId={newWorkspaceDealId ?? ''}
+              onBack={handleBackToWorkspaces}
+              onSubmit={handleSubmitForApproval}
+            />
           )}
           {/* 
             REMOVED: Standalone Exchanges view (violates workspace-centric model)
@@ -702,18 +696,19 @@ function AppContent() {
           {currentView === 'settings-roles' && (userRole === 'Primary Operations User' ? <AccessRestrictedView /> : <SettingsView activeTab="roles" />)}
           {currentView === 'settings-users' && (userRole === 'Primary Operations User' ? <AccessRestrictedView /> : <SettingsView activeTab="users" />)}
           {currentView === 'settings-integrations' && (userRole === 'Primary Operations User' ? <AccessRestrictedView /> : <SettingsView activeTab="integrations" />)}
-          {currentView === 'decision-review' && (
-            <DecisionReviewView onReviewDecision={(exchange) => {
-              setSelectedExchange(exchange);
-              setCurrentView('decision-review-detail');
-            }} />
-          )}
-          {currentView === 'decision-review-detail' && selectedExchange && (
-            <DecisionReviewScreen 
-              exchange={selectedExchange}
-              onBack={() => setCurrentView('decision-review')}
+          {currentView === 'decision-review' && selectedDocument && (
+            <DecisionReviewView
+              document={selectedDocument}
+              onBack={handleBackToDashboard}
             />
           )}
+          {/*
+            'decision-review-detail' has no render branch: DecisionReviewScreen
+            requires a DecisionReviewData (workspaceId, dealId, decisionState,
+            documents, recipients, accessConfig) that nothing in App builds. It
+            was previously rendered with `exchange`/`onBack`, which are not its
+            props, so `data` was undefined. Wire it up once a source exists.
+          */}
           {currentView === 'profile' && (
             <ProfileView
               userName={userRole === 'Primary Operations User' ? 'James Rodriguez' : 'Sarah Mitchell'}

@@ -1,21 +1,15 @@
 import { X, ZoomIn, ZoomOut, Download, Printer } from 'lucide-react';
 
-interface Document {
-  id: string;
+/** Only the fields this modal actually renders. */
+interface PreviewableDocument {
   name: string;
   type: string;
-  size: number;
-  status: 'Ready' | 'Processing' | 'Error';
-  uploadedAt: string;
-  uploadedBy: string;
-  downloadable: boolean;
-  documentType: 'Uploaded' | 'Received';
 }
 
 interface PDFPreviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  document: Document | null;
+  document: PreviewableDocument | null;
 }
 
 export function PDFPreviewModal({ isOpen, onClose, document }: PDFPreviewModalProps) {

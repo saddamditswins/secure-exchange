@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from 'react';
 import { X, Plus, User, Mail, Phone, Calendar, CheckCircle, Trash2, Search, FileSignature, Clock, AlertTriangle, GripVertical } from 'lucide-react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import type { Identifier } from 'dnd-core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import {
   Select,
@@ -61,7 +62,7 @@ interface DraggableParticipantProps {
 function DraggableParticipant({ participant, index, moveParticipant, onRemove, isDraggable }: DraggableParticipantProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<{ index: number }, void, { handlerId: Identifier | null }>({
     accept: PARTICIPANT_TYPE,
     collect(monitor) {
       return {

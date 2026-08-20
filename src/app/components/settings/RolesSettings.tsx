@@ -211,8 +211,8 @@ export function RolesSettings() {
     setRoleName(role.name);
     setRoleDesc(role.description);
     setPermissionModules(createPermissionModules(role.permissions));
-    setIsReadOnly('isDefault' in role && role.isDefault);
-    setIsEditMode(editMode && !('isDefault' in role && role.isDefault));
+    setIsReadOnly('isDefault' in role && role.isDefault === true);
+    setIsEditMode(editMode && !('isDefault' in role && role.isDefault === true));
     setIsRoleDialogOpen(true);
   };
 
@@ -223,7 +223,7 @@ export function RolesSettings() {
     setIsRoleDialogOpen(true);
   };
 
-  const handleCloneRole = (role: typeof defaultRoles[0]) => {
+  const handleCloneRole = (role: CustomRole | typeof defaultRoles[0]) => {
     setRoleName(`Copy of ${role.name}`);
     setRoleDesc(role.description);
     setPermissionModules(createPermissionModules(role.permissions));

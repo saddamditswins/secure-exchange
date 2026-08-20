@@ -21,3 +21,25 @@ export interface Organization {
 
 /** Tenant and Organization are the same record; `Tenant` is the legacy name. */
 export type Tenant = Organization;
+
+export type WorkspaceStatus =
+  | 'Draft'
+  | 'Pending Approval'
+  | 'Active'
+  | 'Completed'
+  | 'Archived';
+
+export interface Workspace {
+  id: string;
+  dealId: string | null;
+  name: string;
+  status: WorkspaceStatus;
+  lastUpdated: string;
+  description?: string;
+  createdDate?: string;
+  documentsCount?: number;
+  createdBy?: string;
+  updatedBy?: string;
+  /** Internal user assigned to the workspace. */
+  staffPerson?: string;
+}
