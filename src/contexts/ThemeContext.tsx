@@ -162,19 +162,30 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
+  // ponytail: defaults to light because the app is not dark-ready -- screens use
+  // ~190 hardcoded `bg-white` and ~400 `text-neutral-800/900` classes against only
+  // ~30 `dark:` variants, so dark mode renders white-on-white in most views.
+  // The `.dark` class below is wired correctly; the ThemeSwitcher in TopBar stays
+  // commented out until those hardcoded colours move onto theme tokens.
   const [theme, setThemeState] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('secure-exchange-theme');
-    return (saved as ThemeMode) || 'dark';
+    return saved === 'dark' || saved === 'light' ? saved : 'light';
   });
 
   const tokens = theme === 'dark' ? darkTheme : lightTheme;
 
   useEffect(() => {
     localStorage.setItem('secure-exchange-theme', theme);
-    
-    // Apply theme to CSS custom properties for dynamic theming
+
     const root = document.documentElement;
-    
+
+    // styles/theme.css declares `@custom-variant dark (&:is(.dark *))` and a
+    // `.dark { ... }` token block, but nothing ever set this class -- so every
+    // `dark:` utility and the whole `.dark` block were inert.
+    root.classList.toggle('dark', theme === 'dark');
+
+    // Apply theme to CSS custom properties for dynamic theming
+
     root.style.setProperty('--brand-primary', tokens.brand.primary);
     root.style.setProperty('--brand-secondary', tokens.brand.secondary);
     root.style.setProperty('--brand-accent', tokens.brand.accent);

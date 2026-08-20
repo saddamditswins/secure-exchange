@@ -37,7 +37,6 @@ import { TenantAdminAuditLogs } from './components/TenantAdminAuditLogs';
 import { SuperAdminUsers } from './components/SuperAdminUsers';
 import { useState } from 'react';
 import { ThemeProvider } from '../contexts/ThemeContext';
-import { LanguageProvider } from '../i18n/LanguageContext';
 import { SecureShareFlow } from './components/external-v2/SecureShareFlow';
 import { ESignCeremonyFlow } from './components/external-ceremony/ESignCeremonyFlow';
 
@@ -108,9 +107,7 @@ interface DocumentExchange {
 export default function App() {
   return (
     <ThemeProvider>
-      <LanguageProvider>
-        <AppContent />
-      </LanguageProvider>
+      <AppContent />
     </ThemeProvider>
   );
 }

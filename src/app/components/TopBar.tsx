@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { LanguageSwitcher } from "./LanguageSwitcher";
+import { LanguageDropdown } from "./LanguageDropdown";
 import { ThemeSwitcher } from "./ui/ThemeSwitcher";
 import {
   NotificationPanel,
@@ -104,7 +104,7 @@ export function TopBar({
         {/* <ThemeSwitcher /> */}
 
         {/* Language Switcher */}
-        <LanguageSwitcher />
+        <LanguageDropdown variant="topbar" />
 
         {/* Notifications Bell */}
         <div className="relative" ref={notificationRef}>

@@ -14,11 +14,11 @@ interface Language {
   countryCode: string;
 }
 
+// Only languages with a bundle registered in src/i18n.ts belong here -- listing
+// one without translations silently falls back to English.
 const languages: Language[] = [
   { code: "en", name: "English", countryCode: "US" },
   { code: "fr", name: "Français", countryCode: "FR" },
-  { code: "es", name: "Español", countryCode: "ES" },
-  { code: "de", name: "Deutsch", countryCode: "DE" },
 ];
 
 interface LanguageDropdownProps {
@@ -37,7 +37,6 @@ export function LanguageDropdown({
   const handleLanguageChange = (languageCode: string) => {
     if (i18n && typeof i18n.changeLanguage === 'function') {
       i18n.changeLanguage(languageCode);
-      localStorage.setItem("preferredLanguage", languageCode);
     }
   };
 

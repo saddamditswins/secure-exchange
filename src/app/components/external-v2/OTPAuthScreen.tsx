@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useExternalTheme } from '../../../contexts/ExternalThemeContext';
 import { ExternalCard } from './ExternalCard';
+import { OtpInput } from '../OtpInput';
 import { Mail, Smartphone, ArrowLeft, AlertCircle } from 'lucide-react';
 
 interface OTPAuthScreenProps {
@@ -20,11 +21,11 @@ export function OTPAuthScreen({
 }: OTPAuthScreenProps) {
   const { tokens } = useExternalTheme();
   const [step, setStep] = useState<'request' | 'verify'>('request');
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60);
   const [error, setError] = useState('');
   const [isResending, setIsResending] = useState(false);
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     if (step === 'verify' && timeLeft > 0) {
@@ -40,41 +41,26 @@ export function OTPAuthScreen({
     setError('');
   };
 
-  const handleOTPChange = (index: number, value: string) => {
-    if (!/^\d*$/.test(value)) return;
-
-    const newOtp = [...otp];
-    newOtp[index] = value.slice(-1);
-    setOtp(newOtp);
-
-    // Auto-focus next input
-    if (value && index < 5) {
-      inputRefs.current[index + 1]?.focus();
-    }
-
-    // Auto-verify when all digits are entered
-    if (newOtp.every((digit) => digit !== '') && index === 5) {
-      handleVerify(newOtp.join(''));
-    }
-  };
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    }
-  };
+  const isComplete = otp.length === 6;
 
   const handleVerify = (code: string) => {
-    // Simulate verification - accept any 6-digit code
-    if (code.length === 6) {
-      setTimeout(() => {
-        onVerified();
-      }, 500);
-    } else {
-      setError('Invalid code. Please try again.');
-      setOtp(['', '', '', '', '', '']);
-      inputRefs.current[0]?.focus();
+    if (timeLeft <= 0) {
+      setError('This code has expired. Request a new one.');
+      setOtp('');
+      return;
     }
+    if (code.length !== 6) {
+      setError('Enter all 6 digits.');
+      return;
+    }
+    setError('');
+    setIsVerifying(true);
+    // ponytail: demo stub -- accepts any 6-digit code. Replace with a server
+    // call that validates the code and returns a session before onVerified().
+    setTimeout(() => {
+      setIsVerifying(false);
+      onVerified();
+    }, 500);
   };
 
   const handleResend = () => {
@@ -82,9 +68,8 @@ export function OTPAuthScreen({
     setTimeout(() => {
       setTimeLeft(60);
       setIsResending(false);
-      setOtp(['', '', '', '', '', '']);
+      setOtp('');
       setError('');
-      inputRefs.current[0]?.focus();
     }, 1000);
   };
 
@@ -185,34 +170,13 @@ export function OTPAuthScreen({
         </div>
 
         {/* OTP Input */}
-        <div className="flex gap-2 justify-center">
-          {otp.map((digit, index) => (
-            <input
-              key={index}
-              ref={(el) => (inputRefs.current[index] = el)}
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              value={digit}
-              onChange={(e) => handleOTPChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              className="w-12 h-12 text-center text-xl font-semibold rounded-lg border-2 transition-all"
-              style={{
-                backgroundColor: tokens.surface.elevated,
-                borderColor: digit ? tokens.brand.primary : tokens.border.soft,
-                color: tokens.text.primary,
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = tokens.interaction.focus.ring;
-                e.currentTarget.style.boxShadow = `0 0 0 3px ${tokens.brand.primary}20`;
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = digit ? tokens.brand.primary : tokens.border.soft;
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            />
-          ))}
-        </div>
+        <OtpInput
+          value={otp}
+          onChange={(code) => { setOtp(code); setError(''); }}
+          onComplete={handleVerify}
+          disabled={isVerifying || timeLeft <= 0}
+          hasError={Boolean(error)}
+        />
 
         {/* Error Message */}
         {error && (
@@ -224,7 +188,7 @@ export function OTPAuthScreen({
             }}
           >
             <AlertCircle className="h-4 w-4" />
-            <span className="text-sm">{error}</span>
+            <span className="text-sm" role="alert">{error}</span>
           </div>
         )}
 
@@ -259,16 +223,17 @@ export function OTPAuthScreen({
 
         {/* Verify Button */}
         <button
-          onClick={() => handleVerify(otp.join(''))}
-          disabled={otp.some((digit) => !digit)}
+          type="button"
+          onClick={() => handleVerify(otp)}
+          disabled={!isComplete || isVerifying}
           className="w-full py-3 rounded-lg font-medium transition-all cursor-pointer"
           style={{
             backgroundColor: tokens.brand.primary,
             color: tokens.text.primary,
-            opacity: otp.some((digit) => !digit) ? tokens.interaction.disabled.opacity : '1',
+            opacity: !isComplete || isVerifying ? tokens.interaction.disabled.opacity : '1',
           }}
           onMouseEnter={(e) => {
-            if (!otp.some((digit) => !digit)) {
+            if (isComplete && !isVerifying) {
               e.currentTarget.style.transform = 'translateY(-1px)';
               e.currentTarget.style.boxShadow = tokens.shadow.md;
             }

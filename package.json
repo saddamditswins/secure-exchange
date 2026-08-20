@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "vite",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check": "node scripts/selfcheck.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
