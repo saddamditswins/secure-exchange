@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Exchange } from '../App';
+import { getExchangeStatusColor } from '../utils/exchangeStatus';
 import { 
   ArrowLeft, FileText, Download, Eye, CheckCircle, XCircle, 
   FolderInput, MoreHorizontal, Shield, Clock, Send, Calendar, Lock, AlertTriangle, RefreshCcw,
@@ -61,20 +62,6 @@ interface AuditEntry {
   actor: string;
   action: string;
   details: string;
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const colors = {
-    'Sent': 'bg-blue-100 text-blue-700',
-    'Viewed': 'bg-purple-100 text-purple-700',
-    'Expired': 'bg-neutral-100 text-neutral-600',
-    'Revoked': 'bg-red-100 text-red-700',
-  };
-  return (
-    <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${colors[status as keyof typeof colors] || 'bg-neutral-100 text-neutral-600'}`}>
-      {status}
-    </span>
-  );
 }
 
 export function ExchangeDetailView({ exchange: initialExchange, onBack, userRole }: ExchangeDetailViewProps) {
@@ -344,12 +331,7 @@ export function ExchangeDetailView({ exchange: initialExchange, onBack, userRole
               <h2 className="text-2xl font-semibold text-neutral-900 mb-1">{exchange.title}</h2>
               <div className="flex items-center gap-3">
                 <span className="text-sm text-neutral-500">{exchange.id}</span>
-                <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                  exchange.status === 'Sent' ? 'bg-blue-50 text-blue-700' :
-                  exchange.status === 'Viewed' ? 'bg-purple-50 text-purple-700' :
-                  exchange.status === 'Expired' ? 'bg-neutral-50 text-neutral-600' :
-                  'bg-red-50 text-red-700'
-                }`}>
+                <span className={`px-2 py-0.5 rounded text-xs font-medium ${getExchangeStatusColor(exchange.status)}`}>
                   {exchange.status}
                 </span>
               </div>
@@ -382,7 +364,7 @@ export function ExchangeDetailView({ exchange: initialExchange, onBack, userRole
                     <Calendar className="w-4 h-4 mr-2" />
                     Extend Expiry
                   </DropdownMenuItem>
-                  {userRole !== 'Primary Operational User' && (
+                  {userRole !== 'Primary Operations User' && (
                     <>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem 

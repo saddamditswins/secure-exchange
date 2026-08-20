@@ -1,3 +1,4 @@
+import type { Tenant, OrganizationStatus } from '../types';
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
@@ -9,17 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-
-interface Tenant {
-  id: string;
-  orgName: string;
-  region: string;
-  status: 'Active' | 'Inactive';
-  createdDate: string;
-  adminEmail: string;
-  exchangeCount: number;
-  userCount: number;
-}
 
 interface SuperAdminTenantDetailProps {
   tenant: Tenant;
@@ -187,14 +177,16 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
 
 // Subcomponents
 
-function StatusBadge({ status }: { status: 'Active' | 'Inactive' }) {
-  const styles = {
+function StatusBadge({ status }: { status: OrganizationStatus }) {
+  const styles: Record<OrganizationStatus, string> = {
     Active: 'bg-green-100 text-green-700',
     Inactive: 'bg-neutral-100 text-neutral-600',
+    Suspended: 'bg-amber-100 text-amber-700',
   };
-  const dotStyles = {
+  const dotStyles: Record<OrganizationStatus, string> = {
     Active: 'bg-green-600',
     Inactive: 'bg-neutral-500',
+    Suspended: 'bg-amber-600',
   };
 
   return (

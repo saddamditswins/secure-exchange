@@ -106,7 +106,7 @@ export function AuditLogView() {
       exchangeId: 'EX-2024-0141',
       exchangeTitle: 'Partnership Agreement - Review',
       actor: 'James Rodriguez',
-      actorRole: 'Primary Operational User',
+      actorRole: 'Primary Operations User',
       action: 'Status Changed',
       details: 'Changed exchange status from Active to Approved',
       ipAddress: '192.168.1.67',

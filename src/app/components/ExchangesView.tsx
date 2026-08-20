@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Exchange } from '../App';
 import { toast } from 'sonner';
+import { getExchangeStatusColor } from '../utils/exchangeStatus';
 import { useTranslation } from 'react-i18next';
 import { MoreHorizontal, Eye, Copy, Trash2, Clock, Shield, Search, Filter, Calendar } from 'lucide-react';
 import {
@@ -170,16 +171,6 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
     toast.success(`Exchange ${exchange.id} has been revoked`);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Sent': return 'bg-blue-100 text-blue-700';
-      case 'Viewed': return 'bg-purple-100 text-purple-700';
-      case 'Expired': return 'bg-neutral-100 text-neutral-600';
-      case 'Revoked': return 'bg-red-100 text-red-700';
-      default: return 'bg-neutral-100 text-neutral-600';
-    }
-  };
-
   const getRiskColor = (risk: string) => {
     switch (risk) {
       case 'Low': return 'text-green-600';
@@ -289,7 +280,7 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(exchange.status)}`}>
+                  <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${getExchangeStatusColor(exchange.status)}`}>
                     {exchange.status}
                   </span>
                 </td>

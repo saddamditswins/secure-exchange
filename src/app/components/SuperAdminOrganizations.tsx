@@ -1,3 +1,4 @@
+import type { Organization } from '../types';
 import { useState, useEffect } from 'react';
 import {
   Select,
@@ -7,16 +8,6 @@ import {
   SelectValue,
 } from "./ui/select";
 
-interface Organization {
-  id: string;
-  name: string;
-  region: string;
-  status: 'Active' | 'Inactive' | 'Suspended';
-  createdDate: string;
-  adminEmail: string;
-  userCount: number;
-}
-
 interface SuperAdminOrganizationsProps {
   onViewOrganization: (org: Organization) => void;
   onCreateOrganization: () => void;
@@ -24,16 +15,16 @@ interface SuperAdminOrganizationsProps {
 
 export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganization }: SuperAdminOrganizationsProps) {
   const allOrganizations: Organization[] = [
-    { id: 'ORG-001', name: 'Acme Financial Services', region: 'US-East', status: 'Active', createdDate: 'Jan 15, 2024', adminEmail: 'admin@acmefinancial.com', userCount: 124 },
-    { id: 'ORG-002', name: 'Apex Financial Group', region: 'US-West', status: 'Active', createdDate: 'Jan 18, 2024', adminEmail: 'admin@apexfinancial.com', userCount: 89 },
-    { id: 'ORG-003', name: 'Meridian Capital', region: 'EU-West', status: 'Active', createdDate: 'Jan 20, 2024', adminEmail: 'admin@meridiancap.com', userCount: 156 },
-    { id: 'ORG-004', name: 'Sterling Investments', region: 'US-West', status: 'Active', createdDate: 'Jan 22, 2024', adminEmail: 'admin@sterlinginv.com', userCount: 73 },
-    { id: 'ORG-005', name: 'Quantum Securities', region: 'APAC', status: 'Active', createdDate: 'Jan 25, 2024', adminEmail: 'admin@quantumsec.com', userCount: 45 },
-    { id: 'ORG-006', name: 'Pinnacle Holdings', region: 'US-East', status: 'Inactive', createdDate: 'Dec 10, 2023', adminEmail: 'admin@pinnacle.com', userCount: 12 },
-    { id: 'ORG-007', name: 'Horizon Investments', region: 'EU-West', status: 'Active', createdDate: 'Jan 2, 2024', adminEmail: 'admin@horizon.com', userCount: 98 },
-    { id: 'ORG-008', name: 'Zenith Capital Partners', region: 'APAC', status: 'Suspended', createdDate: 'Dec 15, 2023', adminEmail: 'admin@zenith.com', userCount: 34 },
-    { id: 'ORG-009', name: 'Global Finance Corp', region: 'US-East', status: 'Active', createdDate: 'Jan 28, 2024', adminEmail: 'admin@globalfinance.com', userCount: 201 },
-    { id: 'ORG-010', name: 'Venture Capital LLC', region: 'US-West', status: 'Suspended', createdDate: 'Dec 5, 2023', adminEmail: 'admin@venturecap.com', userCount: 56 },
+    { id: 'ORG-001', orgName: 'Acme Financial Services', region: 'US-East', status: 'Active', createdDate: 'Jan 15, 2024', adminEmail: 'admin@acmefinancial.com', exchangeCount: 342, userCount: 124 },
+    { id: 'ORG-002', orgName: 'Apex Financial Group', region: 'US-West', status: 'Active', createdDate: 'Jan 18, 2024', adminEmail: 'admin@apexfinancial.com', exchangeCount: 218, userCount: 89 },
+    { id: 'ORG-003', orgName: 'Meridian Capital', region: 'EU-West', status: 'Active', createdDate: 'Jan 20, 2024', adminEmail: 'admin@meridiancap.com', exchangeCount: 401, userCount: 156 },
+    { id: 'ORG-004', orgName: 'Sterling Investments', region: 'US-West', status: 'Active', createdDate: 'Jan 22, 2024', adminEmail: 'admin@sterlinginv.com', exchangeCount: 167, userCount: 73 },
+    { id: 'ORG-005', orgName: 'Quantum Securities', region: 'APAC', status: 'Active', createdDate: 'Jan 25, 2024', adminEmail: 'admin@quantumsec.com', exchangeCount: 92, userCount: 45 },
+    { id: 'ORG-006', orgName: 'Pinnacle Holdings', region: 'US-East', status: 'Inactive', createdDate: 'Dec 10, 2023', adminEmail: 'admin@pinnacle.com', exchangeCount: 23, userCount: 12 },
+    { id: 'ORG-007', orgName: 'Horizon Investments', region: 'EU-West', status: 'Active', createdDate: 'Jan 2, 2024', adminEmail: 'admin@horizon.com', exchangeCount: 255, userCount: 98 },
+    { id: 'ORG-008', orgName: 'Zenith Capital Partners', region: 'APAC', status: 'Suspended', createdDate: 'Dec 15, 2023', adminEmail: 'admin@zenith.com', exchangeCount: 61, userCount: 34 },
+    { id: 'ORG-009', orgName: 'Global Finance Corp', region: 'US-East', status: 'Active', createdDate: 'Jan 28, 2024', adminEmail: 'admin@globalfinance.com', exchangeCount: 523, userCount: 201 },
+    { id: 'ORG-010', orgName: 'Venture Capital LLC', region: 'US-West', status: 'Suspended', createdDate: 'Dec 5, 2023', adminEmail: 'admin@venturecap.com', exchangeCount: 118, userCount: 56 },
   ];
 
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
@@ -50,7 +41,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
   // Apply Filters
   const filteredOrganizations = allOrganizations.filter(org => {
     const matchesSearch = 
-      org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      org.orgName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       org.id.toLowerCase().includes(searchQuery.toLowerCase());
     
     const matchesRegion = regionFilter === 'All Regions' || org.region === regionFilter;
@@ -72,13 +63,13 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
 
   const handleToggleStatus = (org: Organization, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Toggle status for ${org.name}`);
+    console.log(`Toggle status for ${org.orgName}`);
     setOpenMenuId(null);
   };
 
   const handleImpersonate = (org: Organization, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Impersonate ${org.name} (read-only)`);
+    console.log(`Impersonate ${org.orgName} (read-only)`);
     setOpenMenuId(null);
   };
 
@@ -90,7 +81,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
   };
 
   const handleConfirmDelete = () => {
-    console.log(`Delete ${organizationToDelete?.name}`);
+    console.log(`Delete ${organizationToDelete?.orgName}`);
     setShowDeleteConfirm(false);
     setOrganizationToDelete(null);
   };
@@ -223,7 +214,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
                 >
                   <td className="px-6 py-4">
                     <div>
-                      <div className="text-sm text-neutral-900">{org.name}</div>
+                      <div className="text-sm text-neutral-900">{org.orgName}</div>
                       <div className="text-sm text-neutral-500">{org.id}</div>
                     </div>
                   </td>
@@ -403,7 +394,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
               <div className="flex-1">
                 <h3 className="text-lg text-neutral-900 mb-2">Delete Organization</h3>
                 <p className="text-sm text-neutral-600 mb-1">
-                  Are you sure you want to delete <span className="font-medium text-neutral-900">{organizationToDelete.name}</span>?
+                  Are you sure you want to delete <span className="font-medium text-neutral-900">{organizationToDelete.orgName}</span>?
                 </p>
                 <p className="text-sm text-neutral-600">
                   This action cannot be undone. All data, users, and configurations will be permanently removed.

@@ -1,15 +1,5 @@
+import type { Tenant, OrganizationStatus } from '../types';
 import { useState } from 'react';
-
-interface Tenant {
-  id: string;
-  orgName: string;
-  region: string;
-  status: 'Active' | 'Inactive';
-  createdDate: string;
-  adminEmail: string;
-  exchangeCount: number;
-  userCount: number;
-}
 
 interface SuperAdminTenantListProps {
   onViewTenant: (tenant: Tenant) => void;
@@ -202,10 +192,11 @@ export function SuperAdminTenantList({ onViewTenant, onCreateTenant }: SuperAdmi
   );
 }
 
-function StatusBadge({ status }: { status: 'Active' | 'Inactive' }) {
-  const styles = {
+function StatusBadge({ status }: { status: OrganizationStatus }) {
+  const styles: Record<OrganizationStatus, string> = {
     Active: 'bg-green-50 text-green-700',
     Inactive: 'bg-neutral-100 text-neutral-600',
+    Suspended: 'bg-amber-50 text-amber-700',
   };
 
   return (

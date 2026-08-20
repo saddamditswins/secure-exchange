@@ -62,9 +62,22 @@ export type ViewType =
   | 'decision-review-detail'
   | 'profile';
 
-export type SuperAdminViewType = 'dashboard' | 'organizations' | 'create-organization' | 'organization-detail' | 'users' | 'user-profile' | 'audit-logs';
+export type SuperAdminViewType =
+  | 'dashboard'
+  | 'organizations'
+  | 'create-organization'
+  | 'organization-detail'
+  | 'users'
+  | 'user-profile'
+  | 'audit-logs'
+  // 'tenants' / 'tenant-detail' are the tenant-management screens; they were in use
+  // but missing from this union, so nothing type-checked them.
+  | 'tenants'
+  | 'tenant-detail';
 
-export type ExchangeStatus = 'Draft' | 'Active' | 'Approved' | 'Revoked' | 'Completed';
+import type { ExchangeStatus } from './utils/exchangeStatus';
+import type { Organization, Tenant } from './types';
+export type { ExchangeStatus };
 
 export interface Exchange {
   id: string;
@@ -78,28 +91,6 @@ export interface Exchange {
   requiresSignature: boolean;
   riskLevel?: 'Low' | 'Medium' | 'High';
   expiresAt?: string;
-}
-
-interface Tenant {
-  id: string;
-  orgName: string;
-  region: string;
-  status: 'Active' | 'Inactive';
-  createdDate: string;
-  adminEmail: string;
-  exchangeCount: number;
-  userCount: number;
-}
-
-interface Organization {
-  id: string;
-  orgName: string;
-  region: string;
-  status: 'Active' | 'Inactive';
-  createdDate: string;
-  adminEmail: string;
-  exchangeCount: number;
-  userCount: number;
 }
 
 interface DocumentExchange {
@@ -472,7 +463,7 @@ function AppContent() {
             
             {superAdminView === 'organization-detail' && selectedOrganization && (
               <SuperAdminTenantDetail
-                tenant={selectedOrganization as any}
+                tenant={selectedOrganization}
                 onBack={handleBackToTenants}
               />
             )}
