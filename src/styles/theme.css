@@ -132,7 +132,16 @@
   --color-white: #153240;
   --color-emerald-500: #34d399;
   --color-emerald-600: #10b981;
-  
+
+  /* Landing surfaces. The marketing page previously repeated these as raw hex
+     ~95 times; use bg-ink-700 / border-ink-500 instead. Ordered dark -> light. */
+  --color-ink-900: #0A1D27;
+  --color-ink-800: #0F2936;
+  --color-ink-700: #153240;
+  --color-ink-600: #1B3D4E;
+  --color-ink-500: #24485C;
+  --color-ink-400: #35637C;
+
   /* Override all standard Tailwind colors with hex values to prevent oklch issues */
   --color-slate-50: #f8fafc;
   --color-slate-100: #f1f5f9;
@@ -431,5 +440,46 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+}
+/* --- Landing hero motion ------------------------------------------------ */
+
+/* Sweeps the headline's gradient so the hero is never fully still. */
+@keyframes hero-gradient-drift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.hero-gradient-text {
+  background-size: 200% 200%;
+  animation: hero-gradient-drift 8s ease-in-out infinite;
+}
+
+/* Slow breathing halo behind the hero copy. */
+@keyframes hero-halo {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.6;
+  }
+}
+
+.hero-halo {
+  animation: hero-halo 10s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient-text,
+  .hero-halo {
+    animation: none;
   }
 }
