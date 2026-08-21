@@ -50,31 +50,50 @@ export function DummyPDFDocument({ pageNumber, documentName }: DummyPDFDocumentP
     ctx.fillStyle = tokens.text.secondary;
     ctx.font = `${16 * scale}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
     
+    // Whole paragraphs, not pre-broken lines -- the renderer below wraps them to
+    // the page measure. '' is a blank line between paragraphs.
     const paragraphs = [
-      'This Electronic Signature Agreement ("Agreement") is entered into between the parties',
-      'named herein, effective as of the date of the last signature below. This document confirms',
-      'that all parties agree to conduct business electronically and accept electronic signatures',
-      'as legally binding.',
+      'This Electronic Signature Agreement ("Agreement") is entered into between the parties named herein, effective as of the date of the last signature below. This document confirms that all parties agree to conduct business electronically and accept electronic signatures as legally binding.',
       '',
       'By signing this document electronically, you acknowledge and agree that:',
       '',
       '1. Your electronic signature is the legal equivalent of your manual signature.',
       '2. You consent to be legally bound by the terms and conditions of this Agreement.',
-      '3. You have the authority to enter into this Agreement on behalf of yourself or your',
-      '   organization, if applicable.',
+      '3. You have the authority to enter into this Agreement on behalf of yourself or your organization, if applicable.',
       '4. You will retain a copy of this Agreement for your records.',
       '',
-      'The parties acknowledge that this Agreement may be executed in counterparts, each of',
-      'which shall be deemed an original and all of which together shall constitute one and the',
-      'same instrument. Electronic signatures shall have the same legal effect as original',
-      'signatures.',
+      'The parties acknowledge that this Agreement may be executed in counterparts, each of which shall be deemed an original and all of which together shall constitute one and the same instrument. Electronic signatures shall have the same legal effect as original signatures.',
     ];
 
     let yPosition = 140 * scale;
     const lineHeight = 24 * scale;
+    // The page is 612pt wide with a 60pt margin each side. Wrap to that measure
+    // rather than trusting the hardcoded line breaks, which ran past the edge.
+    const marginX = 60 * scale;
+    const maxWidth = (612 - 120) * scale;
 
     paragraphs.forEach((line) => {
-      ctx.fillText(line, 60 * scale, yPosition);
+      if (!line) {
+        yPosition += lineHeight;
+        return;
+      }
+      // Preserve any leading indent when wrapping a continuation line.
+      const indent = /^\s*/.exec(line)?.[0] ?? '';
+      const words = line.trim().split(' ');
+      let current = indent;
+
+      words.forEach((word) => {
+        const next = current === indent ? indent + word : current + ' ' + word;
+        if (ctx.measureText(next).width > maxWidth && current !== indent) {
+          ctx.fillText(current, marginX, yPosition);
+          yPosition += lineHeight;
+          current = indent + word;
+        } else {
+          current = next;
+        }
+      });
+
+      ctx.fillText(current, marginX, yPosition);
       yPosition += lineHeight;
     });
 
