@@ -57,11 +57,6 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
   const handleOpenDemoModal = () => {
     setDemoModalOpen(true);
     setIsSubmitted(false);
-    // Track: Demo CTA click
-    console.log('Demo CTA clicked:', {
-      timestamp: new Date().toISOString(),
-      page: 'landing',
-    });
   };
 
   // Close demo modal
@@ -150,12 +145,6 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
     if (!validateForm()) {
       return;
     }
-
-    // Track: Demo request submission
-    console.log('Demo request submitted:', {
-      ...formData,
-      timestamp: new Date().toISOString(),
-    });
 
     // Show confirmation
     setIsSubmitted(true);

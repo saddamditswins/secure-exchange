@@ -137,6 +137,8 @@ function AppContent() {
   const [initialWorkspaceTab, setInitialWorkspaceTab] = useState<'documents' | 'exchanges' | 'esign' | 'audit'>('documents');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isESignEditorOpen, setIsESignEditorOpen] = useState(false);
+  const [exchangeInitialTab, setExchangeInitialTab] =
+    useState<'documents' | 'participants' | 'activity' | 'evidence' | 'settings'>('documents');
 
   // Notifications state
   const [notifications, setNotifications] = useState<Notification[]>(generateDummyNotifications());
@@ -185,16 +187,15 @@ function AppContent() {
       };
       setSelectedExchange(mockExchange);
       
-      // Navigate to exchange detail
+      // Open on the section the notification refers to.
+      setExchangeInitialTab(notification.targetTab ?? 'documents');
       setCurrentView('exchange-detail');
-      
-      // In a real app, would also set the active tab based on notification.targetTab
-      console.log(`Navigate to ${notification.exchangeId}, tab: ${notification.targetTab}`);
     }
   };
 
   const handleExchangeSelect = (exchange: Exchange) => {
     setSelectedExchange(exchange);
+    setExchangeInitialTab('documents');
     setCurrentView('exchange-detail');
   };
 
@@ -241,8 +242,6 @@ function AppContent() {
 
   const handleCreateWorkspace = (type: 'new' | 'import') => {
     if (type === 'import') {
-      // In a real app, this would open an import flow from Dealertrack
-      console.log('Import from Dealertrack initiated');
       // For now, show the create workspace modal
       setShowImportDealertrackModal(true);
     } else {
@@ -572,8 +571,6 @@ function AppContent() {
                 setNewWorkspaceDocuments([]);
                 setInitialWorkspaceTab('exchanges'); // Navigate to exchanges tab
                 setCurrentView('workspace-details');
-                // Store filter to apply in workspace exchanges view
-                console.log(`Navigate to workspace ${workspaceId} with filter: ${filter}`);
               }}
               onNavigateToExchangeDetail={(workspaceId, exchangeId) => {
                 // Navigate to exchange detail within workspace context
@@ -682,7 +679,7 @@ function AppContent() {
             </div>
           )}
           {currentView === 'exchange-detail' && selectedExchange && (
-            <ExchangeDetailView exchange={selectedExchange} onBack={handleBackToExchanges} userRole={userRole} />
+            <ExchangeDetailView exchange={selectedExchange} onBack={handleBackToExchanges} userRole={userRole} initialTab={exchangeInitialTab} />
           )}
           {currentView === 'audit-log' && (
             userRole === 'Primary Operations User' 

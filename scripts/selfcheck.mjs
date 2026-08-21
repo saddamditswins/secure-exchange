@@ -186,6 +186,44 @@ console.log('\ndemo feedback');
     assert.match(src, /<PDFPreviewModal/);
     assert.match(src, /downloadDummyPDF\(/);
   });
+
+  check('workspace document and packet actions do something', () => {
+    const src = read('src/app/components/WorkspaceDetailsView.tsx');
+    for (const fn of [
+      'handleDownloadDocument',
+      'handleDeleteDocument',
+      'handleViewPacketHistory',
+      'handleDownloadSignedDocuments',
+    ]) {
+      assert.match(src, new RegExp(`onClick=\\{\\(\\) => ${fn}\\(`), `${fn} not wired`);
+    }
+  });
+
+  check('connecting an integration changes its status', () => {
+    const src = read('src/app/components/settings/IntegrationsSettings.tsx');
+    assert.match(src, /setIntegrations\(/, 'integration list is not stateful');
+    assert.match(src, /toast\.success\(/);
+  });
+
+  check('notifications open the exchange tab they refer to', () => {
+    assert.match(read('src/app/App.tsx'), /initialTab=\{exchangeInitialTab\}/);
+    assert.match(read('src/app/components/ExchangeDetailView.tsx'), /initialTab = 'documents'/);
+  });
+
+  // A stray console.log is the signature of a control that was never wired up.
+  check('no console.log anywhere in src', () => {
+    const offenders = [];
+    (function walk(dir) {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) walk(full);
+        else if (/\.tsx?$/.test(entry.name) && /console\.log/.test(fs.readFileSync(full, 'utf8'))) {
+          offenders.push(path.relative(root, full));
+        }
+      }
+    })(path.join(root, 'src'));
+    assert.deepEqual(offenders, [], `console.log in: ${offenders.join(', ')}`);
+  });
 }
 
 console.log('\ndomain types');

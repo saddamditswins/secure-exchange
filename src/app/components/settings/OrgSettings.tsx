@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { 
   Building2, 
@@ -27,10 +28,11 @@ export function OrgSettings() {
 
   const handleSave = () => {
     setIsSaving(true);
-    // Simulate API call and AuditEvent
+    // ponytail: stubbed save delay -- always succeeds. Swap for the real call
+    // once there is a backend, and surface failures with toast.error.
     setTimeout(() => {
-      console.log('Audit Event: OrgConfigUpdated', { timestamp: new Date().toISOString(), actor: 'OrgAdmin' });
       setIsSaving(false);
+      toast.success('Organization settings saved');
     }, 1000);
   };
 

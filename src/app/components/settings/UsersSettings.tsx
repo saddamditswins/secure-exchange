@@ -87,7 +87,7 @@ export function UsersSettings() {
     }
     setShowSheet(false);
     setEditingUser(null);
-    console.log('Audit Event: UserAdded/Updated', { ...data, actor: 'OrgAdmin' });
+    toast.success(editingUser ? `${data.name} updated` : `${data.name} added`);
   };
 
   const confirmDelete = () => {
@@ -95,7 +95,7 @@ export function UsersSettings() {
       setUsers(users.filter(u => u.id !== userToDelete.id));
       setUserToDelete(null);
       setShowDeleteConfirm(false);
-      console.log('Audit Event: UserDeleted', { userId: userToDelete.id, actor: 'OrgAdmin' });
+      toast.success(`${userToDelete.name} removed`);
     }
   };
 

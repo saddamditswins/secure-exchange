@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 interface KPICardProps {
@@ -97,13 +98,15 @@ export function SuperAdminDashboard() {
 
   const handleKPIClick = (kpiName: string) => {
     setSelectedKPI(kpiName);
-    console.log(`KPI clicked: ${kpiName}`);
-    // In a real implementation, this would show a read-only drill-down modal
+    toast.info(`${kpiName} breakdown`, {
+      description: 'Platform admins see tenant data read-only. Opens a drill-down here.',
+    });
   };
 
   const handleGovernanceRowClick = (action: GovernanceAction) => {
-    console.log(`Governance action clicked: ${action.exchangeId}`);
-    // In a real implementation, this would navigate to exchange detail (read-only)
+    toast.info(`${action.exchangeId} — ${action.action.toLowerCase()} by ${action.actor}`, {
+      description: `${action.organization} · ${action.workspace} · ${action.timestamp}`,
+    });
   };
 
   return (

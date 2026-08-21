@@ -39,8 +39,6 @@ export function CreateWorkspaceView({ open, onClose, onCreate }: CreateWorkspace
     // Simulate workspace creation
     const newWorkspaceId = `WS-2024-${Math.floor(Math.random() * 1000).toString().padStart(4, '0')}`;
     
-    // In a real app, we would associate library documents with the workspace here
-    console.log('Attaching library documents:', libraryDocuments);
 
     onCreate(newWorkspaceId, workspaceDocuments, workspaceName, description);
     

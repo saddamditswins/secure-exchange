@@ -29,6 +29,7 @@ import { ExchangesView } from './ExchangesView';
 import { DocumentUploadModal } from './DocumentUploadModal';
 import { DocumentLibrarySelectorModal } from './DocumentLibrarySelectorModal';
 import { PDFPreviewModal } from './PDFPreviewModal';
+import { downloadDummyPDF, inferDocumentType } from '../utils/pdfUtils';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Document as LibraryDocument } from './DocumentsView';
@@ -330,6 +331,42 @@ export function WorkspaceDetailsView({
     toast.success(`Shared ${selectedDocuments.size} documents. Created ${exchangeInfo.name} (${exchangeInfo.id})`);
     setIsSecureShareModalOpen(false);
     setSelectedDocuments(new Set());
+  };
+
+  const handleDownloadDocument = (doc: Document) => {
+    downloadDummyPDF(inferDocumentType(doc.name), doc.name, {
+      workspaceId,
+      documentId: doc.id,
+      participantName: doc.updatedBy,
+    });
+    toast.success(`Downloading ${doc.name}`);
+  };
+
+  const handleDeleteDocument = (doc: Document) => {
+    setDocuments(prev => prev.filter(d => d.id !== doc.id));
+    setSelectedDocuments(prev => {
+      const next = new Set(prev);
+      next.delete(doc.id);
+      return next;
+    });
+    toast.success(`${doc.name} removed from this workspace`);
+  };
+
+  const handleViewPacketHistory = (packet: SigningPacket) => {
+    setActiveTab('audit');
+    toast.info(`Showing activity for ${packet.name}`);
+  };
+
+  const handleDownloadSignedDocuments = (packet: SigningPacket) => {
+    packet.documentNames.forEach(name =>
+      downloadDummyPDF(inferDocumentType(name), name, {
+        workspaceId,
+        participantName: packet.createdBy,
+      }),
+    );
+    toast.success(
+      `Downloading ${packet.documentNames.length} signed document${packet.documentNames.length === 1 ? '' : 's'}`,
+    );
   };
 
   const handleBulkUpload = (files: File[]) => {
@@ -751,7 +788,7 @@ export function WorkspaceDetailsView({
                               Preview
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              onClick={() => console.log('Download:', doc.name)}
+                              onClick={() => handleDownloadDocument(doc)}
                               className="cursor-pointer"
                             >
                               <Download className="w-4 h-4 mr-2" />
@@ -759,7 +796,7 @@ export function WorkspaceDetailsView({
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
-                              onClick={() => console.log('Delete:', doc.name)}
+                              onClick={() => handleDeleteDocument(doc)}
                               className="cursor-pointer text-rose-600 focus:text-rose-700 focus:bg-rose-50"
                             >
                               <Trash2 className="w-4 h-4 mr-2" />
@@ -902,7 +939,7 @@ export function WorkspaceDetailsView({
                                     View Details
                                   </DropdownMenuItem>
                                   <DropdownMenuItem
-                                    onClick={() => console.log('View history:', packet.id)}
+                                    onClick={() => handleViewPacketHistory(packet)}
                                     className="cursor-pointer"
                                   >
                                     <History className="w-4 h-4 mr-2" />
@@ -910,7 +947,7 @@ export function WorkspaceDetailsView({
                                   </DropdownMenuItem>
                                   {isCompleted && (
                                     <DropdownMenuItem
-                                      onClick={() => console.log('Download signed documents:', packet.id)}
+                                      onClick={() => handleDownloadSignedDocuments(packet)}
                                       className="cursor-pointer"
                                     >
                                       <Download className="w-4 h-4 mr-2" />

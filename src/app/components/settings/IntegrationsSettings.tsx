@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { 
   Settings, 
   CheckCircle2, 
@@ -15,25 +16,36 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 
-const integrations = [
+interface Integration {
+  id: string;
+  name: string;
+  description: string;
+  /** 'Not Configured' | 'Pending Validation' | 'Active' | 'Error' | 'Disabled' */
+  status: string;
+  icon: string;
+  lastSync: string;
+}
+
+const INITIAL_INTEGRATIONS: Integration[] = [
   {
     id: 'dealertrack',
     name: 'Dealertrack DMS',
     description: 'Sync customer data and deal jackets directly from Dealertrack.',
-    status: 'Active', // 'Not Configured', 'Pending Validation', 'Active', 'Error', 'Disabled'
+    status: 'Active',
     icon: 'DT', // Placeholder for logo
     lastSync: '10 mins ago'
   }
 ];
 
 export function IntegrationsSettings() {
-  const [selectedIntegration, setSelectedIntegration] = useState<typeof integrations[0] | null>(null);
+  const [integrations, setIntegrations] = useState<Integration[]>(INITIAL_INTEGRATIONS);
+  const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [dealerId, setDealerId] = useState('');
   const [isValidating, setIsValidating] = useState(false);
 
-  const handleOpenSettings = (integration: typeof integrations[0]) => {
+  const handleOpenSettings = (integration: Integration) => {
     setSelectedIntegration(integration);
     setIsModalOpen(true);
     setAgreedToTerms(false);
@@ -41,12 +53,27 @@ export function IntegrationsSettings() {
   };
 
   const handleSave = () => {
+    const target = selectedIntegration;
+    if (!target) return;
+
     setIsValidating(true);
-    // Simulate validation
+    setIntegrations(prev =>
+      prev.map(i => (i.id === target.id ? { ...i, status: 'Pending Validation' } : i)),
+    );
+
+    // ponytail: stubbed validation delay -- always succeeds. Replace with the
+    // real credential check once there is a backend to call.
     setTimeout(() => {
+      setIntegrations(prev =>
+        prev.map(i =>
+          i.id === target.id ? { ...i, status: 'Active', lastSync: 'Just now' } : i,
+        ),
+      );
       setIsValidating(false);
       setIsModalOpen(false);
-      console.log('Audit Event: IntegrationConfigured', { integration: selectedIntegration?.name, dealerId, actor: 'OrgAdmin' });
+      toast.success(`${target.name} connected`, {
+        description: `Dealer ID ${dealerId} verified. Deal jackets will sync automatically.`,
+      });
     }, 1500);
   };
 

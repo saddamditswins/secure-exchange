@@ -28,10 +28,14 @@ import { copyToClipboard } from '../utils/clipboard';
 import { PDFViewerModal } from './PDFViewerModal';
 import { downloadDummyPDF, inferDocumentType } from '../utils/pdfUtils';
 
+type ExchangeTab = 'documents' | 'participants' | 'activity' | 'evidence' | 'settings';
+
 interface ExchangeDetailViewProps {
   exchange: Exchange;
   onBack: () => void;
   userRole?: 'Super Admin' | 'Tenant Admin' | 'Primary Operations User';
+  /** Tab to open on. Used when a notification links to a specific section. */
+  initialTab?: ExchangeTab;
 }
 
 interface Document {
@@ -64,10 +68,10 @@ interface AuditEntry {
   details: string;
 }
 
-export function ExchangeDetailView({ exchange: initialExchange, onBack, userRole }: ExchangeDetailViewProps) {
+export function ExchangeDetailView({ exchange: initialExchange, onBack, userRole, initialTab = 'documents' }: ExchangeDetailViewProps) {
   const { t } = useTranslation();
   const [exchange, setExchange] = useState(initialExchange);
-  const [activeTab, setActiveTab] = useState<'documents' | 'participants' | 'activity' | 'evidence' | 'settings'>('documents');
+  const [activeTab, setActiveTab] = useState<ExchangeTab>(initialTab);
   
   // Modals state
   const [isExtendExpiryOpen, setIsExtendExpiryOpen] = useState(false);
