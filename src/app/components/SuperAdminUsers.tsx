@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
 import {
   Select,
@@ -36,7 +37,7 @@ export function SuperAdminUsers({ onViewUserProfile }: SuperAdminUsersProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const allUsers: User[] = [
+  const [allUsers, setAllUsers] = useState<User[]>([
     { id: 'USR-001', name: 'Platform Admin', email: 'admin@platform.com', role: 'Super Admin', status: 'Active', lastLogin: '1 hour ago', createdDate: 'Jan 1, 2024' },
     { id: 'USR-002', name: 'System Admin', email: 'system@platform.com', role: 'Super Admin', status: 'Active', lastLogin: '2 hours ago', createdDate: 'Jan 5, 2024' },
     { id: 'USR-003', name: 'Support Staff', email: 'support@platform.com', role: 'Support', status: 'Active', lastLogin: '30 min ago', createdDate: 'Jan 10, 2024' },
@@ -45,7 +46,7 @@ export function SuperAdminUsers({ onViewUserProfile }: SuperAdminUsersProps) {
     { id: 'USR-006', name: 'John Manager', email: 'john.manager@platform.com', role: 'Super Admin', status: 'Active', lastLogin: '3 hours ago', createdDate: 'Jan 8, 2024' },
     { id: 'USR-007', name: 'Jane Support', email: 'jane.support@platform.com', role: 'Support', status: 'Active', lastLogin: '1 day ago', createdDate: 'Jan 12, 2024' },
     { id: 'USR-008', name: 'Mike Ops', email: 'mike.ops@platform.com', role: 'Support', status: 'Inactive', lastLogin: '1 week ago', createdDate: 'Dec 28, 2023' },
-  ];
+  ]);
 
   // Apply Filters
   const filteredUsers = allUsers.filter(user => {
@@ -94,7 +95,11 @@ export function SuperAdminUsers({ onViewUserProfile }: SuperAdminUsersProps) {
 
   const handleToggleStatus = (user: User, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Toggle status for ${user.name}`);
+    const next = user.status === 'Active' ? 'Inactive' : 'Active';
+    setAllUsers(prev => prev.map(u => (u.id === user.id ? { ...u, status: next } : u)));
+    toast.success(
+      next === 'Inactive' ? `${user.name} deactivated` : `${user.name} reactivated`,
+    );
     setOpenMenuId(null);
   };
 
@@ -106,7 +111,10 @@ export function SuperAdminUsers({ onViewUserProfile }: SuperAdminUsersProps) {
   };
 
   const handleConfirmDelete = () => {
-    console.log(`Delete ${userToDelete?.name}`);
+    if (userToDelete) {
+      setAllUsers(prev => prev.filter(u => u.id !== userToDelete.id));
+      toast.success(`${userToDelete.name} deleted`);
+    }
     setShowDeleteConfirm(false);
     setUserToDelete(null);
   };
@@ -116,8 +124,26 @@ export function SuperAdminUsers({ onViewUserProfile }: SuperAdminUsersProps) {
     setUserToDelete(null);
   };
 
-  const handleFormSubmit = (data: any) => {
-    console.log(editingUser ? 'Update user' : 'Create user', data);
+  const handleFormSubmit = (data: Pick<User, 'name' | 'email' | 'role' | 'status'>) => {
+    if (editingUser) {
+      setAllUsers(prev =>
+        prev.map(u => (u.id === editingUser.id ? { ...u, ...data } : u)),
+      );
+      toast.success(`${data.name} updated`);
+    } else {
+      const created: User = {
+        ...data,
+        id: `USR-${String(Date.now()).slice(-6)}`,
+        lastLogin: 'Never',
+        createdDate: new Date().toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        }),
+      };
+      setAllUsers(prev => [created, ...prev]);
+      toast.success(`${data.name} added`);
+    }
     setShowSheet(false);
     setEditingUser(null);
   };

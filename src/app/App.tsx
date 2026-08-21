@@ -28,6 +28,7 @@ import { SuperAdminOrganizations } from './components/SuperAdminOrganizations';
 import { ESignEditorView } from './components/ESignEditorView';
 import { generateDummyNotifications, Notification } from './components/NotificationPanel';
 import { Sheet, SheetContent } from './components/ui/sheet';
+import { Toaster } from './components/ui/sonner';
 import { SuperAdminAuditLogs } from './components/SuperAdminAuditLogs';
 import { CreateOrganizationView } from './components/CreateOrganizationView';
 import { AccessRestrictedView } from './components/AccessRestrictedView';
@@ -108,6 +109,8 @@ export default function App() {
   return (
     <ThemeProvider>
       <AppContent />
+      {/* Mounted once here: without it every toast() call in the app is a no-op. */}
+      <Toaster />
     </ThemeProvider>
   );
 }

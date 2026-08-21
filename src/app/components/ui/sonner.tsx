@@ -1,22 +1,23 @@
-"use client";
+import { Toaster as Sonner, type ToasterProps } from "sonner";
+import { useTheme } from "../../../contexts/ThemeContext";
 
-import { useTheme } from "next-themes";
-import { Toaster as Sonner, ToasterProps } from "sonner";
-
+/**
+ * Toast host. Must be mounted once, near the app root, or every `toast()`
+ * call in the app silently does nothing.
+ *
+ * Reads the app's own ThemeContext -- this previously pulled from
+ * `next-themes`, which has no provider mounted anywhere.
+ */
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      theme={theme}
+      position="bottom-right"
+      richColors
+      closeButton
       className="toaster group"
-      style={
-        {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
-        } as React.CSSProperties
-      }
       {...props}
     />
   );

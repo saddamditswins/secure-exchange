@@ -1,5 +1,6 @@
 import type { Organization } from '../types';
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import {
   Select,
   SelectContent,
@@ -14,7 +15,7 @@ interface SuperAdminOrganizationsProps {
 }
 
 export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganization }: SuperAdminOrganizationsProps) {
-  const allOrganizations: Organization[] = [
+  const [allOrganizations, setAllOrganizations] = useState<Organization[]>([
     { id: 'ORG-001', orgName: 'Acme Financial Services', region: 'US-East', status: 'Active', createdDate: 'Jan 15, 2024', adminEmail: 'admin@acmefinancial.com', exchangeCount: 342, userCount: 124 },
     { id: 'ORG-002', orgName: 'Apex Financial Group', region: 'US-West', status: 'Active', createdDate: 'Jan 18, 2024', adminEmail: 'admin@apexfinancial.com', exchangeCount: 218, userCount: 89 },
     { id: 'ORG-003', orgName: 'Meridian Capital', region: 'EU-West', status: 'Active', createdDate: 'Jan 20, 2024', adminEmail: 'admin@meridiancap.com', exchangeCount: 401, userCount: 156 },
@@ -25,7 +26,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
     { id: 'ORG-008', orgName: 'Zenith Capital Partners', region: 'APAC', status: 'Suspended', createdDate: 'Dec 15, 2023', adminEmail: 'admin@zenith.com', exchangeCount: 61, userCount: 34 },
     { id: 'ORG-009', orgName: 'Global Finance Corp', region: 'US-East', status: 'Active', createdDate: 'Jan 28, 2024', adminEmail: 'admin@globalfinance.com', exchangeCount: 523, userCount: 201 },
     { id: 'ORG-010', orgName: 'Venture Capital LLC', region: 'US-West', status: 'Suspended', createdDate: 'Dec 5, 2023', adminEmail: 'admin@venturecap.com', exchangeCount: 118, userCount: 56 },
-  ];
+  ]);
 
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [organizationToDelete, setOrganizationToDelete] = useState<Organization | null>(null);
@@ -63,13 +64,21 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
 
   const handleToggleStatus = (org: Organization, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Toggle status for ${org.orgName}`);
+    const next = org.status === 'Suspended' ? 'Active' : 'Suspended';
+    setAllOrganizations(prev =>
+      prev.map(o => (o.id === org.id ? { ...o, status: next } : o)),
+    );
+    toast.success(
+      next === 'Suspended' ? `${org.orgName} suspended` : `${org.orgName} reactivated`,
+    );
     setOpenMenuId(null);
   };
 
   const handleImpersonate = (org: Organization, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`Impersonate ${org.orgName} (read-only)`);
+    toast.info(`Viewing ${org.orgName} as read-only`, {
+      description: 'Support session started. Every action is recorded in the audit log.',
+    });
     setOpenMenuId(null);
   };
 
@@ -81,7 +90,10 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
   };
 
   const handleConfirmDelete = () => {
-    console.log(`Delete ${organizationToDelete?.orgName}`);
+    if (organizationToDelete) {
+      setAllOrganizations(prev => prev.filter(o => o.id !== organizationToDelete.id));
+      toast.success(`${organizationToDelete.orgName} deleted`);
+    }
     setShowDeleteConfirm(false);
     setOrganizationToDelete(null);
   };

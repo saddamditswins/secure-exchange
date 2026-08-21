@@ -34,7 +34,10 @@ const check = (name, fn) => {
     console.log(`  ok   ${name}`);
   } catch (err) {
     failures++;
-    console.error(`  FAIL ${name}\n       ${err.message}`);
+    // Several assertions match against whole source files; printing the actual
+    // value would dump the file and bury the failure.
+    const [summary] = String(err.message).split('\n');
+    console.error(`  FAIL ${name}\n       ${summary}`);
   }
 };
 
@@ -146,6 +149,42 @@ console.log('\notp entry');
   check('secure-share flow rejects a code after it expires', () => {
     const src = read('src/app/components/external-v2/OTPAuthScreen.tsx');
     assert.match(src, /timeLeft <= 0/);
+  });
+}
+
+console.log('\ndemo feedback');
+{
+  // The bug: 50 toast() calls across 12 files and no <Toaster /> anywhere,
+  // so every confirmation message in the app silently did nothing.
+  check('a Toaster is mounted at the app root', () => {
+    assert.match(read('src/app/App.tsx'), /<Toaster\s*\/>/);
+  });
+
+  check('the Toaster reads the app theme, not an unmounted next-themes', () => {
+    const src = read('src/app/components/ui/sonner.tsx');
+    // Import, not any mention -- the file's comment explains the old behaviour.
+    assert.doesNotMatch(src, /^import .* from ["']next-themes["']/m);
+    assert.match(src, /contexts\/ThemeContext/);
+  });
+
+  // The bug: these actions only wrote to the console, so in a demo you could
+  // confirm a delete and watch the row stay exactly where it was.
+  for (const f of [
+    'src/app/components/SuperAdminOrganizations.tsx',
+    'src/app/components/SuperAdminUsers.tsx',
+  ]) {
+    check(`${path.basename(f)} actions change state instead of logging`, () => {
+      const src = read(f);
+      assert.doesNotMatch(src, /console\.log/);
+      assert.match(src, /toast\.(success|info)\(/);
+    });
+  }
+
+  check('document Preview and Download do something', () => {
+    const src = read('src/app/components/DocumentsView.tsx');
+    assert.doesNotMatch(src, /onClick=\{\(\) => console\.log\('(Preview|Download)'/);
+    assert.match(src, /<PDFPreviewModal/);
+    assert.match(src, /downloadDummyPDF\(/);
   });
 }
 

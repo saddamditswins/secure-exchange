@@ -29,6 +29,9 @@ import {
   SelectValue,
 } from './ui/select';
 import { DocumentUploadModal } from './DocumentUploadModal';
+import { PDFPreviewModal } from './PDFPreviewModal';
+import { downloadDummyPDF, inferDocumentType } from '../utils/pdfUtils';
+import { toast } from 'sonner';
 
 export interface Document {
   id: string;
@@ -109,6 +112,15 @@ export function DocumentsView({ userRole }: DocumentsViewProps) {
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDocument, setEditingDocument] = useState<Document | null>(null);
+  const [previewDocument, setPreviewDocument] = useState<Document | null>(null);
+
+  const handleDownload = (doc: Document) => {
+    downloadDummyPDF(inferDocumentType(doc.name), doc.name, {
+      documentId: doc.id,
+      participantName: doc.uploadedBy,
+    });
+    toast.success(`Downloading ${doc.name}`);
+  };
 
   // Filter Logic
   const filteredDocuments = documents.filter(doc => {
@@ -362,14 +374,14 @@ export function DocumentsView({ userRole }: DocumentsViewProps) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
                       <DropdownMenuItem
-                        onClick={() => console.log('Preview:', doc.name)}
+                        onClick={() => setPreviewDocument(doc)}
                         className="cursor-pointer"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         Preview
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        onClick={() => console.log('Download:', doc.name)}
+                        onClick={() => handleDownload(doc)}
                         className="cursor-pointer"
                       >
                         <Download className="w-4 h-4 mr-2" />
@@ -412,6 +424,12 @@ export function DocumentsView({ userRole }: DocumentsViewProps) {
         onClose={() => setIsModalOpen(false)} 
         initialData={editingDocument}
         onSave={handleSaveDocument}
+      />
+
+      <PDFPreviewModal
+        isOpen={previewDocument !== null}
+        onClose={() => setPreviewDocument(null)}
+        document={previewDocument}
       />
     </div>
   );
