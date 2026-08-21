@@ -15,6 +15,7 @@ import {
   FolderOpen,
   ScrollText
 } from 'lucide-react';
+import { cn } from './ui/utils';
 
 interface SidebarProps {
   currentView: ViewType;
@@ -40,7 +41,7 @@ export function Sidebar({ currentView, onNavigate, className = '', userRole }: S
   const isSettingsActive = currentView.startsWith('settings');
 
   return (
-    <aside className={`w-64 bg-[#153240] border-r border-[#243F4D] flex flex-col ${className}`}>
+    <aside className={cn('w-64 shrink-0 bg-[#153240] border-r border-[#243F4D] flex flex-col', className)}>
       <div className="h-16 flex items-center px-6 border-b border-[#243F4D]">
         <div className="flex items-center gap-3">
           <div className="inline-flex items-center justify-center w-10 h-10 bg-emerald-500 rounded-lg">

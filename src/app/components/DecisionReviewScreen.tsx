@@ -68,7 +68,7 @@ export function DecisionReviewScreen({ data, onBack, onDecisionComplete }: Decis
 
   return (
     <>
-      <div className="max-w-[1200px] mx-auto p-8 pb-32">
+      <div className="max-w-[1200px] mx-auto p-4 sm:p-6 lg:p-8 pb-32">
         <button
           onClick={onBack}
           className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-6 transition-colors cursor-pointer"
@@ -105,7 +105,8 @@ export function DecisionReviewScreen({ data, onBack, onDecisionComplete }: Decis
           <h3 className="text-neutral-900 mb-4">Documents Included</h3>
           
           <div className="overflow-hidden border border-neutral-200 rounded-lg">
-            <table className="w-full">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[480px]">
               <thead className="bg-neutral-50 border-b border-neutral-200">
                 <tr>
                   <th className="text-left px-4 py-3 text-sm text-neutral-600">Document Name</th>
@@ -125,6 +126,7 @@ export function DecisionReviewScreen({ data, onBack, onDecisionComplete }: Decis
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
@@ -133,7 +135,8 @@ export function DecisionReviewScreen({ data, onBack, onDecisionComplete }: Decis
           <h3 className="text-neutral-900 mb-4">External Recipients</h3>
           
           <div className="overflow-hidden border border-neutral-200 rounded-lg">
-            <table className="w-full">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[480px]">
               <thead className="bg-neutral-50 border-b border-neutral-200">
                 <tr>
                   <th className="text-left px-4 py-3 text-sm text-neutral-600">Identity</th>
@@ -153,6 +156,7 @@ export function DecisionReviewScreen({ data, onBack, onDecisionComplete }: Decis
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
@@ -219,12 +223,12 @@ export function DecisionReviewScreen({ data, onBack, onDecisionComplete }: Decis
 
       {/* Sticky Footer with Decision Actions */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 shadow-lg">
-        <div className="max-w-[1200px] mx-auto px-8 py-4">
-          <div className="flex items-center justify-between">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="text-sm text-neutral-600">
               Review decision to proceed with document exchange
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={() => handleDecisionClick('deny')}
                 className="px-5 py-2.5 bg-white border border-red-200 text-red-700 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"

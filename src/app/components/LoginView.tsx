@@ -115,7 +115,7 @@ export function LoginView({ onLogin, onBack }: LoginViewProps) {
 
           {/* Login Form */}
           {loginState === 'login' && (
-            <div className="bg-[#1E3A4A] border border-[#243F4D] rounded-lg p-8 shadow-xl">
+            <div className="bg-[#1E3A4A] border border-[#243F4D] rounded-lg p-6 sm:p-8 shadow-xl">
               <form onSubmit={handleSignIn} className="space-y-6">
                 <div>
                   <label htmlFor="email" className="block text-sm text-neutral-300 mb-2">
@@ -182,7 +182,7 @@ export function LoginView({ onLogin, onBack }: LoginViewProps) {
 
           {/* OTP Verification Form */}
           {loginState === 'verify-otp' && (
-            <div className="bg-[#1E3A4A] border border-[#243F4D] rounded-lg p-8 shadow-xl">
+            <div className="bg-[#1E3A4A] border border-[#243F4D] rounded-lg p-6 sm:p-8 shadow-xl">
               <form onSubmit={handleVerifyOtp} className="space-y-6">
                 <div>
                   <label className="block text-sm text-neutral-300 mb-4 text-center">

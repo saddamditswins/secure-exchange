@@ -92,7 +92,7 @@ export function CeremonyOTPAuth({
             >
               <Shield className="h-8 w-8" style={{ color: tokens.brand.primary }} />
             </div>
-            <h1 className="text-3xl font-bold" style={{ color: tokens.text.primary }}>
+            <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: tokens.text.primary }}>
               Verify Your Identity
             </h1>
             <div className="space-y-2">
@@ -119,7 +119,7 @@ export function CeremonyOTPAuth({
               onChange={(next) => { setCode(next); setError(''); }}
               onComplete={handleVerify}
               hasError={Boolean(error)}
-              boxClassName="w-12 h-14 text-2xl rounded-xl"
+              boxClassName="w-10 h-12 text-xl sm:w-12 sm:h-14 sm:text-2xl rounded-xl"
             />
 
             {/* Error Message */}

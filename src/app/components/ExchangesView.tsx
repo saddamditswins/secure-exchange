@@ -185,7 +185,7 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
       {/* Search and Filters */}
       <div className="bg-white border border-neutral-200 rounded-lg p-4">
         <div className="flex items-center gap-4 flex-wrap">
-          <div className="flex-1 relative min-w-[300px]">
+          <div className="flex-1 relative min-w-[200px]">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
             <input
               type="text"
@@ -196,7 +196,7 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
             />
           </div>
           
-          <div className="w-[180px]">
+          <div className="w-full sm:w-[180px]">
             <Select value={filterStatus} onValueChange={setFilterStatus}>
               <SelectTrigger>
                 <SelectValue placeholder="Status" />
@@ -211,7 +211,7 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
             </Select>
           </div>
 
-          <div className="w-[180px]">
+          <div className="w-full sm:w-[180px]">
             <Select value={filterRecipientType} onValueChange={setFilterRecipientType}>
               <SelectTrigger>
                 <SelectValue placeholder="Recipient Type" />
@@ -224,7 +224,7 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
             </Select>
           </div>
 
-          <div className="w-[180px]">
+          <div className="w-full sm:w-[180px]">
             <Select value={filterExpiry} onValueChange={setFilterExpiry}>
               <SelectTrigger>
                 <SelectValue placeholder="Expiry Status" />
@@ -242,7 +242,8 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
 
       {/* Exchanges Table */}
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[820px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-semibold text-neutral-500 uppercase tracking-wider">Exchange</th>
@@ -350,6 +351,7 @@ export function ExchangesView({ onExchangeSelect }: ExchangesViewProps) {
             ))}
           </tbody>
         </table>
+        </div>
 
         {filteredExchanges.length === 0 && (
           <div className="p-12 text-center">

@@ -55,7 +55,7 @@ export function PDFPreviewModal({ isOpen, onClose, document }: PDFPreviewModalPr
         </div>
 
         {/* PDF/DOCX Preview Area */}
-        <div className="flex-1 overflow-auto bg-neutral-100 p-8">
+        <div className="flex-1 overflow-auto bg-neutral-100 p-4 sm:p-8">
           {isDocx ? (
             <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-12">
               <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
@@ -134,7 +134,7 @@ export function PDFPreviewModal({ isOpen, onClose, document }: PDFPreviewModalPr
                     <p className="text-neutral-700 leading-relaxed">
                       At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
                     </p>
-                    <div className="grid grid-cols-2 gap-8 mt-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
                       <div className="space-y-4">
                         <div className="border-t-2 border-neutral-400 pt-2">
                           <p className="text-sm text-neutral-600">Signature</p>

@@ -20,7 +20,7 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div className="max-w-[1200px] mx-auto p-8 font-sans">
+    <div className="max-w-[1200px] mx-auto p-4 sm:p-6 lg:p-8 font-sans">
       {/* Back Link */}
       <button
         onClick={onBack}
@@ -61,7 +61,7 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
 
       {/* Tabs Section */}
       <Tabs defaultValue="settings" className="w-full">
-        <TabsList className="mb-8 bg-neutral-100 p-1 rounded-lg inline-flex">
+        <TabsList className="mb-8 bg-neutral-100 p-1 rounded-lg inline-flex max-w-full overflow-x-auto">
           <TabsTrigger value="overview" className="px-4 py-2 rounded-md text-sm font-medium data-[state=active]:bg-emerald-500 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm transition-all cursor-pointer">Overview</TabsTrigger>
           <TabsTrigger value="features" className="px-4 py-2 rounded-md text-sm font-medium data-[state=active]:bg-emerald-500 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm transition-all cursor-pointer">Features & Integrations</TabsTrigger>
           <TabsTrigger value="settings" className="px-4 py-2 rounded-md text-sm font-medium data-[state=active]:bg-emerald-500 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm transition-all cursor-pointer">Settings & Actions</TabsTrigger>
@@ -69,7 +69,7 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
 
         {/* Overview Tab Content */}
         <TabsContent value="overview">
-          <div className="grid grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <SummaryCard label="Total Users" value={(tenant.userCount || 0).toString()} />
             <SummaryCard label="Total Exchanges" value={(tenant.exchangeCount || 0).toString()} />
             <SummaryCard label="Data Region" value={tenant.region || '-'} />
@@ -78,7 +78,7 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
 
           <div className="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-neutral-900 mb-4">Organization Details</h3>
-            <div className="grid grid-cols-2 gap-x-12 gap-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
               <DetailRow label="Organization Name" value={tenant.orgName} />
               <DetailRow label="Organization ID" value={tenant.id} />
               <div className="flex flex-col gap-1">
@@ -102,7 +102,7 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
 
         {/* Features Tab Content */}
         <TabsContent value="features">
-          <div className="bg-white border border-neutral-200 rounded-xl p-8 shadow-sm">
+          <div className="bg-white border border-neutral-200 rounded-xl p-6 sm:p-8 shadow-sm">
             <h3 className="text-lg font-semibold text-neutral-900 mb-6">Enabled Features</h3>
             <div className="space-y-4">
               <FeatureRow 
@@ -123,7 +123,7 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
 
         {/* Settings Tab Content */}
         <TabsContent value="settings">
-          <div className="bg-white border border-neutral-200 rounded-xl p-8 shadow-sm">
+          <div className="bg-white border border-neutral-200 rounded-xl p-6 sm:p-8 shadow-sm">
             <h3 className="text-lg font-semibold text-neutral-900 mb-6">Platform Actions</h3>
             
             <div className="space-y-4">
@@ -158,7 +158,7 @@ export function SuperAdminTenantDetail({ tenant, onBack }: SuperAdminTenantDetai
 
       {/* Edit Organization Drawer */}
       <Sheet open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <SheetContent className="w-[600px] sm:w-[540px] sm:max-w-none">
+        <SheetContent className="w-full sm:w-[540px] sm:max-w-none overflow-y-auto">
           <SheetHeader className="mb-4">
             <SheetTitle>Edit Organization</SheetTitle>
             <SheetDescription>Update organization details and settings.</SheetDescription>

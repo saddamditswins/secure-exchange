@@ -228,9 +228,9 @@ export function WorkspaceListView({ onOpenWorkspace, onCreateWorkspace, userRole
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-neutral-900 mb-1">Workspaces</h1>
           <p className="text-sm text-neutral-600">Manage your workspaces</p>
@@ -263,7 +263,7 @@ export function WorkspaceListView({ onOpenWorkspace, onCreateWorkspace, userRole
 
       {/* Top Bar Controls */}
       <div className="bg-white border border-neutral-200 rounded-lg p-4">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {/* Search */}
           <div className="flex-1 relative">
             <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
@@ -277,7 +277,7 @@ export function WorkspaceListView({ onOpenWorkspace, onCreateWorkspace, userRole
           </div>
 
           {/* Staff Multi-Select Filter */}
-          <div className="w-[200px]">
+          <div className="w-full sm:w-[200px]">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="w-full flex items-center justify-between px-3 py-2 border border-neutral-200 rounded-lg text-sm bg-white hover:bg-neutral-50 transition-colors cursor-pointer">
@@ -327,7 +327,7 @@ export function WorkspaceListView({ onOpenWorkspace, onCreateWorkspace, userRole
           </div>
 
           {/* Status Multi-Select Filter */}
-          <div className="w-[200px]">
+          <div className="w-full sm:w-[200px]">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="w-full flex items-center justify-between px-3 py-2 border border-neutral-200 rounded-lg text-sm bg-white hover:bg-neutral-50 transition-colors cursor-pointer">
@@ -383,7 +383,7 @@ export function WorkspaceListView({ onOpenWorkspace, onCreateWorkspace, userRole
       {/* Workspaces Table */}
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[820px]">
             <thead className="bg-neutral-50 border-b border-neutral-200 sticky top-0">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-neutral-500 uppercase tracking-wider">

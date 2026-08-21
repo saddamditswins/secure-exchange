@@ -30,6 +30,10 @@ interface DocumentSidebarProps {
   onFileRemove?: (index: number) => void;
   isDragging?: boolean;
   onDragStateChange?: (isDragging: boolean) => void;
+
+  /** Below lg the sidebar is off-canvas; these drive the drawer. */
+  open?: boolean;
+  onClose?: () => void;
 }
 
 export function DocumentSidebar({
@@ -44,6 +48,8 @@ export function DocumentSidebar({
   onFileRemove,
   isDragging = false,
   onDragStateChange,
+  open = false,
+  onClose,
 }: DocumentSidebarProps) {
   const { tokens } = useExternalTheme();
 
@@ -96,13 +102,23 @@ export function DocumentSidebar({
   };
 
   return (
-    <div
-      className="w-80 border-r flex-shrink-0 overflow-y-auto flex flex-col"
-      style={{
-        backgroundColor: tokens.surface.card,
-        borderColor: tokens.border.soft,
-      }}
-    >
+    <>
+      {open && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+      <div
+        className={`absolute inset-y-0 left-0 z-40 w-80 max-w-[85vw] border-r flex-shrink-0 overflow-y-auto flex flex-col transition-transform duration-200 lg:static lg:max-w-none lg:translate-x-0 ${
+          open ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        style={{
+          backgroundColor: tokens.surface.card,
+          borderColor: tokens.border.soft,
+        }}
+      >
       {/* Sent Documents Section */}
       <div className="flex-shrink-0">
         <div className="p-4 border-b" style={{ borderColor: tokens.border.soft }}>
@@ -299,6 +315,7 @@ export function DocumentSidebar({
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

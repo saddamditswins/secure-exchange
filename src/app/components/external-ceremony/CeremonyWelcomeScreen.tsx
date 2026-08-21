@@ -41,7 +41,7 @@ export function CeremonyWelcomeScreen({
               <FileText className="h-8 w-8" style={{ color: tokens.brand.primary }} />
             </div>
             <h1
-              className="text-3xl font-bold"
+              className="text-2xl sm:text-3xl font-bold"
               style={{ color: tokens.text.primary }}
             >
               You're invited to sign documents

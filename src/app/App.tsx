@@ -528,7 +528,7 @@ function AppContent() {
           onNavigate={(v) => {
             setCurrentView(v);
           }}
-          className="flex"
+          className="hidden md:flex"
           userRole={userRole}
         />
       )}

@@ -2,7 +2,7 @@ import { ShieldAlert } from 'lucide-react';
 
 export function AccessRestrictedView() {
   return (
-    <div className="flex items-center justify-center h-full p-8">
+    <div className="flex items-center justify-center h-full p-4 sm:p-8">
       <div className="max-w-md text-center">
         <div className="mb-6 flex justify-center">
           <div className="w-20 h-20 rounded-full bg-red-50 flex items-center justify-center">

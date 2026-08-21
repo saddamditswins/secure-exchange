@@ -35,7 +35,7 @@ export function ExternalCeremonyLayout({
           boxShadow: tokens.shadow.sm,
         }}
       >
-        <div className="px-8 py-4 flex items-center justify-between">
+        <div className="px-4 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3">
           {/* Left - Organization */}
           <div className="flex items-center gap-3">
             {organizationLogo ? (
@@ -113,9 +113,9 @@ export function ExternalCeremonyLayout({
           borderColor: tokens.border.soft,
         }}
       >
-        <div className="px-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
+        <div className="px-4 sm:px-8">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-6">
               <p
                 className="text-sm font-medium flex items-center gap-2"
                 style={{ color: tokens.text.muted }}

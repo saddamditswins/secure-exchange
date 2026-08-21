@@ -75,7 +75,7 @@ export function ImportDocumentsView({ workspaceId, dealId, onBack, onContinue }:
   const errorCount = mockDocuments.filter(d => d.status === 'Error').length;
 
   return (
-    <div className="max-w-[1200px] mx-auto p-8">
+    <div className="max-w-[1200px] mx-auto p-4 sm:p-6 lg:p-8">
       <button
         onClick={onBack}
         className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-6 transition-colors"
@@ -127,7 +127,7 @@ export function ImportDocumentsView({ workspaceId, dealId, onBack, onContinue }:
       </div>
 
       {/* Import Summary */}
-      <div className="grid grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
         <div className="bg-white border border-neutral-200 rounded-lg p-6">
           <div className="text-sm text-neutral-600 mb-1">Total Documents</div>
           <div className="text-2xl text-neutral-900">{mockDocuments.length}</div>
@@ -148,7 +148,8 @@ export function ImportDocumentsView({ workspaceId, dealId, onBack, onContinue }:
           <h3 className="text-neutral-900">Imported Documents</h3>
         </div>
         
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="text-left px-6 py-3 text-sm text-neutral-600">Document Name</th>
@@ -177,6 +178,7 @@ export function ImportDocumentsView({ workspaceId, dealId, onBack, onContinue }:
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {errorCount > 0 && (

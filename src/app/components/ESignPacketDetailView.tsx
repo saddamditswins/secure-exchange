@@ -179,7 +179,7 @@ export function ESignPacketDetailView({ packet, onBack }: ESignPacketDetailViewP
   const isCompleted = packet.status === 'Completed';
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -315,7 +315,7 @@ export function ESignPacketDetailView({ packet, onBack }: ESignPacketDetailViewP
 
             {/* DOCUMENTS GRID (inside participant section) */}
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[640px]">
                 <thead className="bg-white border-b border-neutral-200">
                   <tr>
                     <th className="text-left px-6 py-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Document Name</th>

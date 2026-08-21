@@ -314,7 +314,7 @@ export function ExchangeDetailView({ exchange: initialExchange, onBack, userRole
   };
 
   return (
-    <div className="w-full min-w-full p-8">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8">
       <button
         onClick={onBack}
         className="mb-6 flex items-center gap-2 text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
@@ -402,8 +402,8 @@ export function ExchangeDetailView({ exchange: initialExchange, onBack, userRole
       </div>
 
       {/* Tabs Navigation */}
-      <div className="border-b border-neutral-200 mb-6">
-        <div className="flex gap-8">
+      <div className="border-b border-neutral-200 mb-6 overflow-x-auto">
+        <div className="flex gap-4 sm:gap-8 whitespace-nowrap">
           {[
             { id: 'documents', label: 'Documents' },
             { id: 'activity', label: 'Activity' },

@@ -204,7 +204,7 @@ export function CeremonySignatureModal({
                 <label className="text-sm font-medium" style={{ color: tokens.text.primary }}>
                   Choose a font style
                 </label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
                     { id: 'font-cursive', name: 'Cursive', style: 'Dancing Script' },
                     { id: 'font-script', name: 'Script', style: 'Pacifico' },
@@ -232,7 +232,7 @@ export function CeremonySignatureModal({
 
               {/* Preview */}
               <div
-                className="rounded-xl p-8 flex items-center justify-center border"
+                className="rounded-xl p-4 sm:p-8 flex items-center justify-center border"
                 style={{
                   backgroundColor: tokens.surface.app,
                   borderColor: tokens.border.soft,

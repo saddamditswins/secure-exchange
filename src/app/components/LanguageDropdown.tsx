@@ -89,7 +89,7 @@ export function LanguageDropdown({
       value={i18n.language}
       onValueChange={handleLanguageChange}
     >
-      <SelectTrigger className="w-[110px] h-9 bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-50 transition-colors focus:ring-1 focus:ring-neutral-900/10">
+      <SelectTrigger className="w-[92px] sm:w-[110px] h-9 bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-50 transition-colors focus:ring-1 focus:ring-neutral-900/10">
         <div className="flex items-center gap-2">
           <Languages className="w-4 h-4 text-neutral-500" />
           <SelectValue>

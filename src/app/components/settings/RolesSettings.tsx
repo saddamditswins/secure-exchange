@@ -336,7 +336,7 @@ export function RolesSettings() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-neutral-900">Roles & Permissions</h2>
           <p className="text-neutral-500 mt-1">Manage RBAC roles and access levels.</p>
@@ -417,7 +417,8 @@ export function RolesSettings() {
 
         <TabsContent value="custom" className="space-y-6">
           <div className="bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden">
-            <table className="w-full text-left">
+            <div className="overflow-x-auto">
+            <table className="w-full text-left min-w-[640px]">
               <thead className="bg-neutral-50 border-b border-neutral-200">
                 <tr>
                   <th className="px-6 py-4 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Role Name</th>
@@ -473,6 +474,7 @@ export function RolesSettings() {
                 ))}
               </tbody>
             </table>
+            </div>
             
             {customRoles.length === 0 && (
               <div className="p-12 text-center text-neutral-500">

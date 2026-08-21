@@ -102,7 +102,7 @@ export function NotificationPanel({
       />
       
       {/* Panel */}
-      <div className="fixed right-4 top-16 mt-2 w-[420px] max-h-[600px] bg-[#153240] border border-[#243F4D] rounded-lg shadow-2xl shadow-black/40 z-50 flex flex-col">
+      <div className="fixed left-4 right-4 top-16 mt-2 max-h-[70vh] sm:left-auto sm:w-[420px] sm:max-h-[600px] bg-[#153240] border border-[#243F4D] rounded-lg shadow-2xl shadow-black/40 z-50 flex flex-col">
         {/* Header */}
         <div className="px-4 py-3 border-b border-[#243F4D]">
           <div className="flex items-center justify-between mb-3">

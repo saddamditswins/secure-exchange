@@ -30,7 +30,7 @@ export function OtpInput({
   length = 6,
   disabled = false,
   hasError = false,
-  boxClassName = 'w-12 h-12 text-xl rounded-lg',
+  boxClassName = 'w-10 h-10 text-lg sm:w-12 sm:h-12 sm:text-xl rounded-lg',
   label = 'One-time passcode',
 }: OtpInputProps) {
   const { tokens } = useExternalTheme();
@@ -82,7 +82,7 @@ export function OtpInput({
 
   return (
     <div
-      className="flex gap-2 justify-center"
+      className="flex gap-1.5 sm:gap-2 justify-center"
       onPaste={handlePaste}
       role="group"
       aria-label={label}

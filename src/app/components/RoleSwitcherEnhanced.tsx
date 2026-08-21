@@ -69,7 +69,7 @@ export function RoleSwitcherEnhanced({ onSelectRole }: RoleSwitcherEnhancedProps
     <div className="min-h-screen bg-neutral-50 flex flex-col">
       {/* Header */}
       <header className="p-6 bg-white border-b border-neutral-200">
-        <div className="max-w-full mx-20">
+        <div className="max-w-full md:mx-20">
           <div className="flex items-center gap-3">
             <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-500 rounded-lg">
               <svg
@@ -96,7 +96,7 @@ export function RoleSwitcherEnhanced({ onSelectRole }: RoleSwitcherEnhancedProps
 
       {/* Main Content */}
       <div className="flex-1 flex items-center justify-center p-6 max-w-[1400px] mx-auto">
-        <div className="w-full mx-20">
+        <div className="w-full md:mx-20">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-neutral-100 rounded-full mb-4">
               <svg

@@ -101,8 +101,8 @@ export function ClientsView() {
   });
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-neutral-900 mb-1">Clients</h1>
           <p className="text-sm text-neutral-600">Manage your customer and provider network</p>
@@ -130,7 +130,7 @@ export function ClientsView() {
               className="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900"
             />
           </div>
-          <div className="w-[180px]">
+          <div className="w-full sm:w-[180px]">
             <Select value={filterType} onValueChange={setFilterType}>
               <SelectTrigger>
                 <SelectValue placeholder="Filter by Type" />
@@ -146,7 +146,8 @@ export function ClientsView() {
       </div>
 
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[820px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-semibold text-neutral-500 uppercase tracking-wider w-24">Active</th>
@@ -217,10 +218,11 @@ export function ClientsView() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       <Sheet open={showSheet} onOpenChange={setShowSheet}>
-        <SheetContent className="w-[400px] sm:w-[540px]">
+        <SheetContent className="w-full sm:max-w-[540px] overflow-y-auto">
           <SheetHeader className="mb-6">
             <SheetTitle>{editingClient ? 'Edit Client' : 'Add New Client'}</SheetTitle>
             <SheetDescription>

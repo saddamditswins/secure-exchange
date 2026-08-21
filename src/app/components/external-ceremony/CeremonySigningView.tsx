@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useExternalTheme } from '../../../contexts/ExternalThemeContext';
-import { PenLine, CheckCircle2, ChevronLeft, ChevronRight, ArrowRight, ArrowUp, ArrowDown } from 'lucide-react';
+import { PenLine, CheckCircle2, ChevronLeft, ChevronRight, ArrowRight, ArrowUp, ArrowDown, PanelLeft } from 'lucide-react';
 import { CeremonySignatureModal } from './CeremonySignatureModal';
 import { DummyPDFDocument } from './DummyPDFDocument';
 import { DocumentSidebar } from './DocumentSidebar';
@@ -40,6 +40,8 @@ export function CeremonySigningView({
   const [documents, setDocuments] = useState(initialDocuments);
   const [selectedDocIndex, setSelectedDocIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  // The document list is an off-canvas drawer below lg.
+  const [showDocList, setShowDocList] = useState(false);
   const [showSignatureModal, setShowSignatureModal] = useState(false);
   const [hasSignature, setHasSignature] = useState(false);
   const [signatureData, setSignatureData] = useState('');
@@ -113,6 +115,7 @@ export function CeremonySigningView({
     if (docIndex !== -1) {
       setSelectedDocIndex(docIndex);
       setCurrentPage(1);
+      setShowDocList(false);
     }
   };
 
@@ -188,21 +191,31 @@ export function CeremonySigningView({
         </div>
 
         {/* Main Content - Sidebar + Preview */}
-        <div className="flex flex-1 overflow-hidden">
+        <div className="relative flex flex-1 overflow-hidden">
           {/* Left Sidebar - Document List */}
           <DocumentSidebar
             documents={sidebarDocuments}
             activeDocumentId={selectedDoc.id}
             onDocumentSelect={handleDocumentSelect}
             showFieldCounts={true}
+            open={showDocList}
+            onClose={() => setShowDocList(false)}
           />
 
           {/* Main Preview Area - Full Width */}
           <div className="flex-1 overflow-y-auto">
-            <div className="p-8">
+            <div className="p-4 sm:p-6 lg:p-8">
+              <button
+                onClick={() => setShowDocList(true)}
+                className="mb-4 inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium lg:hidden"
+                style={{ borderColor: tokens.border.soft, color: tokens.text.primary }}
+              >
+                <PanelLeft className="h-4 w-4" />
+                All documents
+              </button>
               {/* Document Title */}
-              <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-2xl font-bold" style={{ color: tokens.text.primary }}>
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
+                <h2 className="text-xl sm:text-2xl font-bold" style={{ color: tokens.text.primary }}>
                   {selectedDoc.name}
                 </h2>
                 <span className="text-sm font-medium" style={{ color: tokens.text.muted }}>

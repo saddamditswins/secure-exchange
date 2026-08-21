@@ -354,11 +354,11 @@ export function DashboardView({ onReviewDocument, onViewWorkspace, userPermissio
           <h3 className="text-neutral-900">Active Document Exchanges</h3>
           {hasDetailedAccess && (
           <div className="bg-white border border-neutral-200 rounded-lg p-3">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
               <label className="text-sm font-medium text-neutral-700 whitespace-nowrap">
                 Filter by Risk:
               </label>
-              <div className="w-[180px]">
+              <div className="w-full sm:w-[180px]">
                 <Select
                   value={filterRisk}
                   onValueChange={(value) => setFilterRisk(value)}
@@ -389,7 +389,8 @@ export function DashboardView({ onReviewDocument, onViewWorkspace, userPermissio
         </div>
 
         <div className="bg-white border border-neutral-200 rounded-lg h-[500px] overflow-auto relative shadow-sm">
-          <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[960px]">
             <thead className="bg-neutral-50 border-b border-neutral-200 sticky top-0 z-10 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
               <tr>
                 <th className="px-6 py-3 text-sm font-medium text-neutral-600 bg-neutral-50 whitespace-nowrap">Workspace ID</th>
@@ -440,6 +441,7 @@ export function DashboardView({ onReviewDocument, onViewWorkspace, userPermissio
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>

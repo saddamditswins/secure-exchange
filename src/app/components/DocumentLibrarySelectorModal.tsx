@@ -144,7 +144,7 @@ export function DocumentLibrarySelectorModal({ isOpen, onClose, onSelect, existi
               className="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900"
             />
           </div>
-          <div className="w-[180px]">
+          <div className="w-full sm:w-[180px]">
             <Select value={filterCategory} onValueChange={setFilterCategory}>
               <SelectTrigger>
                 <SelectValue placeholder="Category" />

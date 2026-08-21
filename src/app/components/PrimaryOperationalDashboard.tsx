@@ -319,7 +319,7 @@ export function PrimaryOperationalDashboard() {
   };
 
   return (
-    <div className="p-6 space-y-6 w-full min-w-full">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
       {/* Page Header */}
       <div>
         <h1 className="text-[#ffffff] mb-1">My Workspace</h1>
@@ -327,7 +327,7 @@ export function PrimaryOperationalDashboard() {
       </div>
 
       {/* Section 1: Operational Snapshot - KPI Cards */}
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
         <button
           onClick={() => handleKPIClick('active')}
           className={`bg-[#132E3B] border-2 rounded-lg p-5 text-left transition-all cursor-pointer hover:border-emerald-400 hover:shadow-lg ${
@@ -406,13 +406,13 @@ export function PrimaryOperationalDashboard() {
 
       {/* Section 2: My Active Work - Main Exchange Table */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-[#ffffff]">My Active Work</h2>
         </div>
 
         {/* Filters */}
         <div className="bg-[#132E3B] border border-[#243F4D] rounded-lg p-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1 relative">
               <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -441,7 +441,7 @@ export function PrimaryOperationalDashboard() {
                 </button>
               )}
             </div>
-            <div className="w-[200px]">
+            <div className="w-full sm:w-[200px]">
               <MultiSelectFilter
                 label="Workspaces"
                 options={WORKSPACES}
@@ -453,7 +453,7 @@ export function PrimaryOperationalDashboard() {
                 placeholder="All Workspaces"
               />
             </div>
-            <div className="w-[200px]">
+            <div className="w-full sm:w-[200px]">
               <MultiSelectFilter
                 label="Status"
                 options={STATUSES}
@@ -479,7 +479,7 @@ export function PrimaryOperationalDashboard() {
         {/* Exchange Table */}
         <div className="bg-[#132E3B] border border-[#243F4D] rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[720px]">
               <thead className="bg-[#0B2530] border-b border-[#243F4D]">
                 <tr>
                   <th 
@@ -653,7 +653,7 @@ export function PrimaryOperationalDashboard() {
           <h3 className="text-[#ffffff]">E-Sign In Progress</h3>
           <span className="text-xs text-neutral-500">{inProgressSignings} active</span>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {MOCK_EXCHANGES.filter(e => e.status === 'In Progress').slice(0, 6).map((exchange) => (
             <div key={exchange.id} className="bg-[#0B2530] border border-[#243F4D] rounded-lg p-4">
               <div className="flex items-start justify-between mb-3">
@@ -689,7 +689,7 @@ export function PrimaryOperationalDashboard() {
       </div>
 
       {/* Section 4 & 5: Today's Tasks + Recent Activity - Side by Side */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Today's Tasks */}
         <div className="bg-[#132E3B] border border-[#243F4D] rounded-lg p-5">
           <div className="flex items-center justify-between mb-4">

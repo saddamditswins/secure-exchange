@@ -113,9 +113,9 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
   const totalSuspended = allOrganizations.filter(o => o.status === 'Suspended').length;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-semibold text-neutral-900 mb-1">Organizations</h1>
           <p className="text-sm text-neutral-600">Manage platform organizations and settings</p>
@@ -132,7 +132,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white border border-neutral-200 rounded-lg p-4">
           <div className="text-sm text-neutral-600 mb-1">Total Organizations</div>
           <div className="text-2xl text-neutral-900">{allOrganizations.length}</div>
@@ -153,7 +153,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
 
       {/* Filters and Search */}
       <div className="bg-white border border-neutral-200 rounded-lg p-4">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="flex-1 relative">
             <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -167,7 +167,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
             />
           </div>
           <Select value={regionFilter} onValueChange={setRegionFilter}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Region" />
             </SelectTrigger>
             <SelectContent>
@@ -179,7 +179,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
             </SelectContent>
           </Select>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
@@ -194,7 +194,8 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
 
       {/* Organizations Table */}
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[820px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="px-6 py-3 text-left text-xs text-neutral-600 uppercase tracking-wider">Organization</th>
@@ -335,6 +336,7 @@ export function SuperAdminOrganizations({ onViewOrganization, onCreateOrganizati
             )}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Pagination */}

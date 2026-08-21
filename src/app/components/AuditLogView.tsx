@@ -140,7 +140,7 @@ export function AuditLogView() {
     : mockAuditLogs.filter(log => log.action === filterAction);
 
   return (
-    <div className="w-full min-w-full p-8">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
         <h2 className="text-neutral-900 mb-2">Audit Log</h2>
         <p className="text-sm text-neutral-600">Complete audit trail for compliance and security oversight</p>
@@ -148,11 +148,11 @@ export function AuditLogView() {
 
       <div className="mb-6">
         <div className="bg-white border border-neutral-200 rounded-lg p-4">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <label className="text-sm font-medium text-neutral-700 whitespace-nowrap">
               Filter by Action:
             </label>
-            <div className="w-[240px]">
+            <div className="w-full sm:w-[240px]">
               <Select
                 value={filterAction}
                 onValueChange={(value) => setFilterAction(value)}
@@ -182,7 +182,8 @@ export function AuditLogView() {
       </div>
 
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[820px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="text-left px-6 py-3 text-sm text-neutral-600">Timestamp</th>
@@ -214,6 +215,7 @@ export function AuditLogView() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

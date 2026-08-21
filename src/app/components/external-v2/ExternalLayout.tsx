@@ -36,7 +36,7 @@ export function ExternalLayout({
           borderColor: tokens.border.soft,
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             {organizationLogo ? (
               <img src={organizationLogo} alt={organizationName} className="h-8 w-8 rounded" />
@@ -91,7 +91,7 @@ export function ExternalLayout({
             borderColor: tokens.border.soft,
           }}
         >
-          <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <p className="text-sm" style={{ color: tokens.text.muted }}>
               🔒 This is a secure document exchange. All communications are encrypted and monitored
               for compliance.

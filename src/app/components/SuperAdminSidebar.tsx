@@ -1,4 +1,5 @@
 import { SuperAdminViewType } from '../App';
+import { cn } from './ui/utils';
 
 interface SuperAdminSidebarProps {
   currentView: SuperAdminViewType;
@@ -31,7 +32,7 @@ export function SuperAdminSidebar({ currentView, onNavigate, className = '' }: S
   ];
 
   return (
-    <aside className={`w-64 bg-[#153240] border-r border-[#243F4D] flex flex-col ${className}`}>
+    <aside className={cn('w-64 shrink-0 bg-[#153240] border-r border-[#243F4D] flex flex-col', className)}>
       {/* Logo */}
       <div className="h-16 flex items-center px-6 border-b border-[#243F4D]">
         <div className="flex items-center gap-3">

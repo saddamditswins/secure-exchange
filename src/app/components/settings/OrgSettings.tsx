@@ -53,7 +53,7 @@ export function OrgSettings() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-neutral-900">Organization Settings</h2>
           <p className="text-neutral-500 mt-1">Manage governance, defaults, and compliance policies.</p>

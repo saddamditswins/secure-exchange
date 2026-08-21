@@ -7,6 +7,7 @@ import {
   ArrowRight,
   Upload as UploadIcon,
   AlertCircle,
+  PanelLeft,
 } from 'lucide-react';
 import { DocumentSidebar } from '../external-ceremony/DocumentSidebar';
 import { DummyPDFDocument } from '../external-ceremony/DummyPDFDocument';
@@ -43,6 +44,8 @@ export function SecureShareDocumentsView({
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedDocIndex, setSelectedDocIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  // The document list is an off-canvas drawer below lg.
+  const [showDocList, setShowDocList] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
   const selectedDoc = documents[selectedDocIndex];
@@ -77,6 +80,7 @@ export function SecureShareDocumentsView({
     if (docIndex !== -1) {
       setSelectedDocIndex(docIndex);
       setCurrentPage(1);
+      setShowDocList(false);
     }
   };
 
@@ -145,7 +149,7 @@ export function SecureShareDocumentsView({
       </div>
 
       {/* Main Content - Sidebar + Preview */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="relative flex flex-1 overflow-hidden">
         {/* Left Sidebar - Document List + Uploads */}
         <DocumentSidebar
           documents={sidebarDocuments}
@@ -159,14 +163,24 @@ export function SecureShareDocumentsView({
           onFileRemove={handleRemoveFile}
           isDragging={isDragging}
           onDragStateChange={setIsDragging}
+          open={showDocList}
+          onClose={() => setShowDocList(false)}
         />
 
         {/* Main Preview Area - Full Width, Clean */}
         <div className="flex-1 overflow-y-auto">
-          <div className="p-8">
+          <div className="p-4 sm:p-6 lg:p-8">
+            <button
+              onClick={() => setShowDocList(true)}
+              className="mb-4 inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium lg:hidden"
+              style={{ borderColor: tokens.border.soft, color: tokens.text.primary }}
+            >
+              <PanelLeft className="h-4 w-4" />
+              All documents
+            </button>
             {/* Document Header */}
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold" style={{ color: tokens.text.primary }}>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold" style={{ color: tokens.text.primary }}>
                 {selectedDoc.name}
               </h2>
               <div className="flex items-center gap-2">

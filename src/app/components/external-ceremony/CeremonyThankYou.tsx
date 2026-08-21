@@ -48,7 +48,7 @@ export function CeremonyThankYou({
 
           {/* Header */}
           <div className="space-y-3">
-            <h1 className="text-4xl font-bold" style={{ color: tokens.text.primary }}>
+            <h1 className="text-2xl sm:text-4xl font-bold" style={{ color: tokens.text.primary }}>
               You're All Set!
             </h1>
             <p className="text-lg" style={{ color: tokens.text.secondary }}>
@@ -57,7 +57,7 @@ export function CeremonyThankYou({
           </div>
 
           {/* Summary Cards */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div
               className="rounded-xl p-6 text-center"
               style={{ backgroundColor: tokens.surface.app }}

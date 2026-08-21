@@ -71,7 +71,7 @@ export function PrepareForSharingView({ workspaceId, dealId, onBack, onSubmit }:
 
   return (
     <>
-      <div className="max-w-[1200px] mx-auto p-8">
+      <div className="max-w-[1200px] mx-auto p-4 sm:p-6 lg:p-8">
         <button
           onClick={onBack}
           className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-6 transition-colors"
@@ -98,7 +98,7 @@ export function PrepareForSharingView({ workspaceId, dealId, onBack, onSubmit }:
         </div>
 
         {/* Selection Summary */}
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           <div className="bg-white border border-neutral-200 rounded-lg p-6">
             <div className="text-sm text-neutral-600 mb-1">Documents Selected</div>
             <div className="text-2xl text-neutral-900">{selectedDocuments.size}</div>
@@ -109,7 +109,7 @@ export function PrepareForSharingView({ workspaceId, dealId, onBack, onSubmit }:
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           {/* Select Documents */}
           <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
             <div className="px-6 py-4 border-b border-neutral-200 bg-neutral-50">

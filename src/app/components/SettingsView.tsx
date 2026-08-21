@@ -21,7 +21,7 @@ export function SettingsView({ activeTab = 'org' }: SettingsViewProps) {
 
   return (
     <div className="flex-1 overflow-y-auto h-full bg-neutral-50">
-      <div className="w-full p-8 pb-20">
+      <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8 pb-20">
         <ActiveComponent />
       </div>
     </div>

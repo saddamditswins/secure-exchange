@@ -254,7 +254,7 @@ export function TenantAdminAuditLogs() {
   const hasActiveFilters = debouncedSearch || selectedWorkspaces.length > 0 || selectedActions.length > 0 || selectedRoles.length > 0;
 
   return (
-    <div className="p-6 space-y-6 w-full min-w-full">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -290,7 +290,7 @@ export function TenantAdminAuditLogs() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <button
           onClick={() => handleKPIClick('total-events')}
           className={`bg-white border-2 rounded-lg p-4 text-left transition-all cursor-pointer hover:border-neutral-300 hover:shadow-sm ${
@@ -335,7 +335,7 @@ export function TenantAdminAuditLogs() {
 
       {/* Filters */}
       <div className="bg-white border border-neutral-200 rounded-lg p-4">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="flex-1 relative">
             <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -358,7 +358,7 @@ export function TenantAdminAuditLogs() {
               </button>
             )}
           </div>
-          <div className="w-[200px]">
+          <div className="w-full sm:w-[200px]">
             <MultiSelectFilter
               label="Workspaces"
               options={WORKSPACES}
@@ -370,7 +370,7 @@ export function TenantAdminAuditLogs() {
               placeholder="All Workspaces"
             />
           </div>
-          <div className="w-[200px]">
+          <div className="w-full sm:w-[200px]">
             <MultiSelectFilter
               label="Roles"
               options={ROLES}
@@ -382,7 +382,7 @@ export function TenantAdminAuditLogs() {
               placeholder="All Roles"
             />
           </div>
-          <div className="w-[200px]">
+          <div className="w-full sm:w-[200px]">
             <Select value={timeRange} onValueChange={(value) => { setTimeRange(value); setCurrentPage(1); }}>
               <SelectTrigger>
                 <SelectValue placeholder="Last 24 Hours" />
@@ -526,7 +526,7 @@ export function TenantAdminAuditLogs() {
                     rows.push(
                       <tr key={`${log.id}-expanded`}>
                         <td colSpan={8} className="px-6 py-4 bg-neutral-50 border-t border-neutral-100">
-                          <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                             <div>
                               <div className="text-xs text-neutral-500 uppercase tracking-wider mb-1">Event ID</div>
                               <div className="text-neutral-900 font-mono">{log.eventId}</div>

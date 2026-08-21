@@ -293,7 +293,7 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
       <Section>
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <Card className="p-8">
+            <Card className="p-6 sm:p-8">
               <div className="flex items-center justify-between gap-4">
                 <Node icon={Server} label="Dealertrack" />
                 <Connector />
@@ -391,7 +391,7 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
 
               <div className="mt-5 space-y-4">
                 <ReadOnlyField label="External recipient" value="michael.thompson@customer.com" />
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <ReadOnlyField label="Access expiry" value="72 hours" />
                   <ReadOnlyField label="Permissions" value="View + Sign" />
                 </div>

@@ -14,6 +14,7 @@ import {
   File,
   Check,
   Trash2,
+  Type,
   X
 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -95,6 +96,10 @@ export function ESignEditorView({
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [autoFillDate, setAutoFillDate] = useState(false);
+  // Below lg the two side panels become off-canvas drawers: the canvas needs
+  // the full width on a phone, but both panels are still reachable.
+  const [showDocPanel, setShowDocPanel] = useState(false);
+  const [showToolPanel, setShowToolPanel] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   const activeDocument = documents.find(d => d.id === activeDocumentId);
@@ -324,8 +329,8 @@ export function ESignEditorView({
   return (
     <div className="h-full flex flex-col bg-[#0c1e28]">
       {/* Top Header */}
-      <div className="bg-[#0f2838] border-b border-[#1a3544] px-6 py-3 flex items-center justify-between flex-shrink-0">
-        <div className="flex items-center gap-4">
+      <div className="bg-[#0f2838] border-b border-[#1a3544] px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3 flex-shrink-0">
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={onBack}
             className="flex items-center gap-2 text-neutral-300 hover:text-[#ffffff] transition-colors cursor-pointer"
@@ -337,7 +342,7 @@ export function ESignEditorView({
           <h1 className="text-base font-semibold text-[#ffffff]">Prepare Document</h1>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <button
             onClick={handleAIAutoDetect}
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-[#ffffff] border border-purple-400 rounded hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 cursor-pointer text-sm font-medium"
@@ -369,10 +374,45 @@ export function ESignEditorView({
         </div>
       </div>
 
+      {/* Drawer toggles. Only below lg, where the panels are off-canvas. */}
+      <div className="flex items-center gap-2 border-b border-[#1a3544] bg-[#0f2838] px-4 py-2 lg:hidden">
+        <button
+          onClick={() => { setShowDocPanel(true); setShowToolPanel(false); }}
+          className="flex items-center gap-2 rounded border border-[#2a4554] px-3 py-1.5 text-xs font-medium text-neutral-300 hover:bg-[#1a3544] cursor-pointer"
+        >
+          <FileText className="w-3.5 h-3.5" />
+          Documents
+        </button>
+        <button
+          onClick={() => { setShowToolPanel(true); setShowDocPanel(false); }}
+          className="flex items-center gap-2 rounded border border-[#2a4554] px-3 py-1.5 text-xs font-medium text-neutral-300 hover:bg-[#1a3544] cursor-pointer"
+        >
+          <Type className="w-3.5 h-3.5" />
+          Fields
+          {participantFieldCount > 0 && (
+            <span className="rounded-full bg-emerald-500 px-1.5 text-[10px] font-semibold text-[#0a1920]">
+              {participantFieldCount}
+            </span>
+          )}
+        </button>
+      </div>
+
       {/* MAIN CONTENT */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="relative flex-1 flex overflow-hidden">
+        {/* Backdrop for the off-canvas panels */}
+        {(showDocPanel || showToolPanel) && (
+          <div
+            className="absolute inset-0 z-20 bg-black/60 lg:hidden"
+            onClick={() => { setShowDocPanel(false); setShowToolPanel(false); }}
+          />
+        )}
+
         {/* LEFT SIDEBAR */}
-        <div className="w-64 bg-[#0a1920] flex flex-col border-r border-[#1a3544]">
+        <div
+          className={`absolute inset-y-0 left-0 z-30 w-64 shrink-0 bg-[#0a1920] flex flex-col border-r border-[#1a3544] transition-transform duration-200 lg:static lg:translate-x-0 ${
+            showDocPanel ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
           {/* Brand Section */}
           <div className="p-6 border-b border-[#1a3544]">
             <div className="flex items-center gap-3">
@@ -541,7 +581,7 @@ export function ESignEditorView({
                     <div className="font-bold text-xs mb-3 uppercase border-b border-neutral-300 pb-1">
                       Customer Information
                     </div>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-xs">
                       <div><span className="text-neutral-600">Last Name:</span> Thomas</div>
                       <div><span className="text-neutral-600">First Name:</span> Simon</div>
                       <div><span className="text-neutral-600">Street Address:</span> 232 West 17th Street</div>
@@ -555,7 +595,7 @@ export function ESignEditorView({
                     <div className="font-bold text-xs mb-3 uppercase border-b border-neutral-300 pb-1">
                       Co-Signing Customer Information
                     </div>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-xs">
                       <div><span className="text-neutral-600">Last Name:</span></div>
                       <div><span className="text-neutral-600">First Name:</span></div>
                       <div><span className="text-neutral-600">Street Address:</span></div>
@@ -567,7 +607,7 @@ export function ESignEditorView({
                     <div className="font-bold text-xs mb-3 uppercase border-b border-neutral-300 pb-1">
                       Covered Vehicle Information
                     </div>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-xs">
                       <div><span className="text-neutral-600">Make/Model:</span> CRX X1</div>
                       <div><span className="text-neutral-600">VIN:</span> J-00000001</div>
                       <div className="col-span-2"><span className="text-neutral-600">Lease Ref #:</span> 1234567/89</div>
@@ -578,7 +618,7 @@ export function ESignEditorView({
                     <div className="font-bold text-xs mb-3 uppercase border-b border-neutral-300 pb-1">
                       Theft Protection Program Limited Product Warranty Information
                     </div>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-xs">
                       <div><span className="text-neutral-600">Warranty Term:</span> 36 months</div>
                       <div><span className="text-neutral-600">Theft Protection Product Retail Price:</span> $334.00</div>
                     </div>
@@ -694,7 +734,11 @@ export function ESignEditorView({
         </div>
 
         {/* RIGHT SIDEBAR - Field Tools */}
-        <div className="w-80 bg-[#0a1920] border-l border-[#1a3544] flex flex-col">
+        <div
+          className={`absolute inset-y-0 right-0 z-30 w-80 max-w-[85vw] shrink-0 bg-[#0a1920] border-l border-[#1a3544] flex flex-col overflow-y-auto transition-transform duration-200 lg:static lg:max-w-none lg:translate-x-0 ${
+            showToolPanel ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
           {/* User Selector */}
           <div className="p-4 border-b border-[#1a3544]">
             <Select value={selectedParticipantId} onValueChange={setSelectedParticipantId}>

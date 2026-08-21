@@ -110,7 +110,7 @@ export function SuperAdminDashboard() {
   };
 
   return (
-    <div className="p-6 space-y-6 w-full min-w-full">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
       {/* Page Header */}
       <div>
         <h1 className="text-[#FFFFFF] mb-1">Platform Overview</h1>
@@ -118,7 +118,7 @@ export function SuperAdminDashboard() {
       </div>
 
       {/* Section 1: Platform Health KPIs */}
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
         <KPICard
           title="Active Organizations"
           value={platformKPIs.activeOrganizations}
@@ -160,7 +160,7 @@ export function SuperAdminDashboard() {
       <div className="bg-[#1E3A4A] border border-[#243F4D] rounded-lg p-6">
         <h2 className="text-lg text-[#FFFFFF] mb-4">Security & Trust Overview</h2>
         
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* OTP Usage Bar Chart */}
           <div>
             <h3 className="text-sm text-neutral-400 mb-4">Authentication Method Distribution</h3>
@@ -177,7 +177,7 @@ export function SuperAdminDashboard() {
                 <Bar dataKey="value" fill="#10B981" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
-            <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-[#153240] border border-[#243F4D] rounded-lg p-3">
                 <div className="text-xs text-neutral-400">OTP Protected</div>
                 <div className="text-xl text-emerald-500 font-bold">82%</div>
@@ -275,7 +275,7 @@ export function SuperAdminDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Section 4: Evidence & Compliance Readiness */}
         <div className="bg-[#1E3A4A] border border-[#243F4D] rounded-lg p-6">
           <h2 className="text-lg text-[#FFFFFF] mb-4">Evidence & Compliance Readiness</h2>

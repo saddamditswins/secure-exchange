@@ -17,7 +17,7 @@ interface DecisionReviewViewProps {
 
 export function DecisionReviewView({ document, onBack }: DecisionReviewViewProps) {
   return (
-    <div className="max-w-[1000px] mx-auto p-8">
+    <div className="max-w-[1000px] mx-auto p-4 sm:p-6 lg:p-8">
       <button
         onClick={onBack}
         className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-6 transition-colors cursor-pointer"
@@ -42,7 +42,7 @@ export function DecisionReviewView({ document, onBack }: DecisionReviewViewProps
       <div className="bg-white border border-neutral-200 rounded-lg p-6 mb-6">
         <h3 className="text-neutral-900 mb-4">Document Details</h3>
         
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <div className="text-sm text-neutral-600 mb-1">Workspace ID</div>
             <div className="text-sm text-neutral-900">{document.workspaceId}</div>

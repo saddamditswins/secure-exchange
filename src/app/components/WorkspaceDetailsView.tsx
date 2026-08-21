@@ -522,7 +522,7 @@ export function WorkspaceDetailsView({
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
       {/* Header */}
       <div>
         <button
@@ -558,9 +558,9 @@ export function WorkspaceDetailsView({
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             {/* Staff Person Reassignment */}
-            <div className="w-[200px]">
+            <div className="w-full sm:w-[200px]">
                 <Select value={staffPerson} onValueChange={setStaffPerson}>
                     <SelectTrigger className="bg-white border-neutral-200">
                         <div className="flex items-center gap-2 text-neutral-700">
@@ -620,8 +620,8 @@ export function WorkspaceDetailsView({
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-neutral-200">
-        <div className="flex gap-8">
+      <div className="border-b border-neutral-200 overflow-x-auto">
+        <div className="flex gap-4 sm:gap-8 whitespace-nowrap">
           {[
             { id: 'documents', label: 'Documents' },
             { id: 'exchanges', label: 'Exchanges' },
@@ -721,7 +721,8 @@ export function WorkspaceDetailsView({
 
             {/* Documents Table */}
             <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm">
-              <table className="w-full">
+              <div className="overflow-x-auto">
+              <table className="w-full min-w-[640px]">
                 <thead className="bg-neutral-50 border-b border-neutral-200">
                   <tr>
                     <th className="w-12 px-6 py-3">
@@ -809,6 +810,7 @@ export function WorkspaceDetailsView({
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         )}
@@ -832,7 +834,8 @@ export function WorkspaceDetailsView({
                </div>
              ) : (
                <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm">
-                <table className="w-full">
+                <div className="overflow-x-auto">
+                <table className="w-full min-w-[640px]">
                   <thead className="bg-neutral-50 border-b border-neutral-200">
                     <tr>
                       <th className="text-left px-6 py-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Ceremony Name</th>
@@ -963,6 +966,7 @@ export function WorkspaceDetailsView({
                     })}
                   </tbody>
                 </table>
+                </div>
                </div>
              )}
           </div>

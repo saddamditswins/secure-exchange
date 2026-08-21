@@ -74,7 +74,7 @@ export function TopBar({
   };
 
   return (
-    <header className="h-16 bg-[#153240] border-b border-[#243F4D] flex items-center justify-between px-6 text-[#FFFFFF]">
+    <header className="h-16 bg-[#153240] border-b border-[#243F4D] flex items-center justify-between gap-2 px-4 sm:px-6 text-[#FFFFFF]">
       <div className="flex items-center gap-4">
         {/* Mobile Menu Button */}
         {onMenuClick && (
@@ -99,7 +99,7 @@ export function TopBar({
         )}
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
         {/* Theme Switcher */}
         {/* <ThemeSwitcher /> */}
 
@@ -151,13 +151,13 @@ export function TopBar({
           />
         </div>
 
-        <div className="flex items-center gap-3 pl-4 border-l border-[#243F4D]">
+        <div className="flex items-center gap-3 pl-2 sm:pl-4 border-l border-[#243F4D]">
           <div className="relative" ref={menuRef}>
             <button
               onClick={() =>
                 setShowProfileMenu(!showProfileMenu)
               }
-              className="group flex items-center gap-3 hover:bg-[#1E3A4A] pl-1 pr-3 py-1 rounded-full transition-colors cursor-pointer border border-transparent hover:border-[#243F4D]"
+              className="group flex items-center gap-2 sm:gap-3 hover:bg-[#1E3A4A] pl-1 pr-2 sm:pr-3 py-1 rounded-full transition-colors cursor-pointer border border-transparent hover:border-[#243F4D]"
             >
               <div className="w-8 h-8 rounded-full bg-emerald-500 text-neutral-900 flex items-center justify-center text-sm font-medium">
                 {userName
@@ -165,7 +165,7 @@ export function TopBar({
                   .map((n) => n[0])
                   .join("")}
               </div>
-              <div className="text-sm font-medium text-[#FFFFFF] group-hover:text-emerald-400 transition-colors">
+              <div className="hidden sm:block text-sm font-medium text-[#FFFFFF] group-hover:text-emerald-400 transition-colors">
                 {userName}
               </div>
               <svg

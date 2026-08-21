@@ -378,7 +378,7 @@ export function ESignPreparationModal({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
         <div className="bg-[#153240] rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col border border-[#243F4D]">
           {/* Header */}
           <div className="px-6 py-4 border-b border-[#243F4D] flex items-center justify-between">
@@ -561,7 +561,7 @@ export function ESignPreparationModal({
                       {isAddingManual && (
                         <div className="bg-[#1E3A4A] border border-[#243F4D] rounded-lg p-4 space-y-3">
                           <h4 className="text-sm text-[#ffffff] font-medium">Manual Entry</h4>
-                          <div className="grid grid-cols-2 gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                               <label className="block text-xs text-neutral-400 mb-1">Name *</label>
                               <input
@@ -712,7 +712,7 @@ export function ESignPreparationModal({
                   <h3 className="text-[#ffffff] font-medium border-b border-[#243F4D] pb-2">Link Security</h3>
                   
                   {/* Expiry */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs text-neutral-400 mb-1.5">Expiry Type</label>
                       <Select
@@ -804,7 +804,7 @@ export function ESignPreparationModal({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <h4 className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mb-3">
                       Participants ({totalParticipants})

@@ -79,7 +79,7 @@ export function SuperAdminTenantList({ onViewTenant, onCreateTenant }: SuperAdmi
     : mockTenants.filter(tenant => tenant.status === filterStatus);
 
   return (
-    <div className="max-w-[1400px] mx-auto p-8">
+    <div className="max-w-[1400px] mx-auto p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
         <div className="flex items-start justify-between mb-2">
           <div>
@@ -118,7 +118,8 @@ export function SuperAdminTenantList({ onViewTenant, onCreateTenant }: SuperAdmi
       </div>
 
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[960px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="text-left px-6 py-3 text-sm text-neutral-600">Org ID</th>
@@ -163,6 +164,7 @@ export function SuperAdminTenantList({ onViewTenant, onCreateTenant }: SuperAdmi
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">

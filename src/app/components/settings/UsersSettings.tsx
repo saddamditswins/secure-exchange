@@ -105,7 +105,7 @@ export function UsersSettings() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-neutral-900">Users</h2>
           <p className="text-neutral-500 mt-1">Manage internal access and user accounts.</p>
@@ -119,7 +119,7 @@ export function UsersSettings() {
       </div>
 
       <div className="bg-white border border-neutral-200 rounded-lg p-4">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="flex-1 relative">
             <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
             <input
@@ -130,7 +130,7 @@ export function UsersSettings() {
               className="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900"
             />
           </div>
-          <div className="w-[180px]">
+          <div className="w-full sm:w-[180px]">
             <Select value={filterRole} onValueChange={setFilterRole}>
               <SelectTrigger>
                 <SelectValue placeholder="Filter by Role" />
@@ -143,7 +143,7 @@ export function UsersSettings() {
               </SelectContent>
             </Select>
           </div>
-          <div className="w-[180px]">
+          <div className="w-full sm:w-[180px]">
             <Select value={filterStatus} onValueChange={setFilterStatus}>
               <SelectTrigger>
                 <SelectValue placeholder="Filter by Status" />
@@ -159,7 +159,8 @@ export function UsersSettings() {
       </div>
 
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[820px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-semibold text-neutral-500 uppercase tracking-wider w-24">Active</th>
@@ -216,10 +217,11 @@ export function UsersSettings() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       <Sheet open={showSheet} onOpenChange={setShowSheet}>
-        <SheetContent className="w-[400px] sm:w-[540px]">
+        <SheetContent className="w-full sm:max-w-[540px] overflow-y-auto">
           <SheetHeader className="mb-6">
             <SheetTitle>{editingUser ? 'Edit User' : 'Add New User'}</SheetTitle>
             <SheetDescription>

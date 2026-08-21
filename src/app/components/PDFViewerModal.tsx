@@ -187,7 +187,7 @@ export function PDFViewerModal({
           {!isLoading && !error && pdfUrl && (
             <div className="flex justify-center">
               <div 
-                className="bg-white shadow-lg"
+                className="bg-white shadow-lg w-[612px] max-w-full"
                 style={{ 
                   transform: `scale(${zoom / 100})`,
                   transformOrigin: 'top center',
@@ -197,7 +197,7 @@ export function PDFViewerModal({
                 {/* PDF Preview - Using iframe for simple PDF display */}
                 <iframe
                   src={pdfUrl}
-                  className="w-[612px] h-[792px] border-0"
+                  className="w-full aspect-[612/792] border-0"
                   title={filename}
                 />
               </div>

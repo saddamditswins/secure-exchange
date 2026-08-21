@@ -61,7 +61,7 @@ function KPICard({ title, value, subtitle, color, icon, onClick }: KPICardProps)
         </div>
       </div>
       <div className="space-y-1">
-        <div className={`text-4xl font-bold ${colors.number}`}>{value}</div>
+        <div className={`text-3xl sm:text-4xl font-bold ${colors.number}`}>{value}</div>
         <div className="text-sm font-medium text-[#ffffff]">{title}</div>
         {subtitle && <div className="text-xs text-neutral-400">{subtitle}</div>}
       </div>
@@ -169,10 +169,10 @@ export function OrgAdminDashboard({ onNavigateToWorkspaceWithFilter, onNavigateT
 
   return (
     <div className="flex-1 overflow-y-auto h-full bg-neutral-50">
-      <div className="mx-auto p-8 pb-20 space-y-8">
+      <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8 pb-20 space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-neutral-900">Governance Command Center</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900">Governance Command Center</h1>
           <p className="text-neutral-600 mt-2">
             Executive oversight of external document access, compliance readiness, and risk management
           </p>
@@ -412,7 +412,7 @@ export function OrgAdminDashboard({ onNavigateToWorkspaceWithFilter, onNavigateT
             </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[720px]">
               <thead className="bg-neutral-50 border-b border-neutral-200">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-semibold text-neutral-500 uppercase tracking-wider">

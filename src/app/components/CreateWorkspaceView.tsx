@@ -173,7 +173,7 @@ export function CreateWorkspaceView({ open, onClose, onCreate }: CreateWorkspace
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                 <button
                   type="button"
                   onClick={() => setIsLibrarySelectorOpen(true)}

@@ -172,8 +172,8 @@ export function DocumentsView({ userRole }: DocumentsViewProps) {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-neutral-900">Documents</h2>
           <p className="text-neutral-600 mt-1">Manage reusable document templates and files</p>
@@ -191,7 +191,7 @@ export function DocumentsView({ userRole }: DocumentsViewProps) {
 
       <div className="bg-white border border-neutral-200 rounded-lg p-4">
         <div className="flex items-center gap-4 flex-wrap">
-          <div className="flex-1 relative min-w-[300px]">
+          <div className="flex-1 relative min-w-[200px]">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
             <input
               type="text"
@@ -325,7 +325,8 @@ export function DocumentsView({ userRole }: DocumentsViewProps) {
       </div>
 
       <div className="bg-white border border-neutral-200 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px]">
           <thead className="bg-neutral-50 border-b border-neutral-200">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-semibold text-neutral-500 uppercase tracking-wider">Document Name</th>
@@ -417,6 +418,7 @@ export function DocumentsView({ userRole }: DocumentsViewProps) {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       <DocumentUploadModal 
